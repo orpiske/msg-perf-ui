@@ -21,10 +21,10 @@
           abstract: true,
           title: 'Performance',
           sidebarMeta: {
-            icon: 'ion-compose',
+            icon: 'ion-stats-bars',
             order: 250,
           },
         });
   }
-  
+
 })();

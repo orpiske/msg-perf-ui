@@ -1,32 +1,26 @@
 <div class="widgets">
 
-  <div class="form-group">
-    <select class="form-control selectpicker" title="Option Types" selectpicker>
-      <option ng-repeat="sut in suts" value={{sut.key}}>{{sut.name}} {{ sut.version }}</option>
-    </select>
+  <div class="form-group" ng-controller="ViewerCtrl">
+
+    <select class="form-control selectpicker" title="Please select a SUT" selectpicker
+          ng-init="selectSuts = options[0]"
+          ng-model="selectSuts"
+          ng-options="sut as sut.sut for sut in suts"
+    />
+
+    <div class="row">
+      <div class="col-md-12"
+           ba-panel
+           ba-panel-title="Broker Performance for {{ selectSuts.sut }}"
+           ba-panel-class="with-scroll">
+        <!-- <div ng-include="'app/pages/performance/stats/throughput/throughput.html'"></div> -->
+          <div id="lineChart" class="admin-chart" ng-controller="ThroughputCtrl" ng-init="init('{{ selectSuts.sut }}', 'abc')"></div>
+      </div>
+    </div>
   </div>
+selectSuts
 
-  <div class="row">
-    <div class="col-md-12"
-         ba-panel
-         ba-panel-title="Line Chart"
-         ba-panel-class="with-scroll">
-      <div ng-include="'app/pages/performance/stats/throughput/throughput.html'"></div>
-    </div>
 
-<!--
-    <div class="col-md-12"
-         ba-panel
-         ba-panel-title="Combined bullet/column and line graphs with multiple value axes"
-         ba-panel-class="with-scroll">
-      <div ng-include="'app/pages/charts/amCharts/combinedChart/combinedChart.html'"></div>
--->
-    </div>
-    <!--<div class="col-md-6">-->
-    <!--<div ba-panel ba-panel-title="Gantt chart" ba-panel-class="with-scroll">-->
-    <!--<div ng-include="'app/pages/charts/amCharts/ganttChart/ganttChart.html'"></div>-->
-    <!--</div>-->
-    <!--</div>-->
   </div>
 
 </div>

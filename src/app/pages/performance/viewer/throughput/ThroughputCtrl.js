@@ -14,8 +14,19 @@
       var layoutColors = baConfig.colors;
       var id = $element[0].getAttribute('id');
 
+      $scope.init = function(name, id) {
+          //This function is sort of private constructor for controller
+          $scope.id = id;
+          $scope.name = name;
+          //Based on passed argument you can make a call to resource
+          //and initialize more objects
+          //$resource.getMeBond(007)
+      };
+
       console.log("Througput (2)")
       console.log(throughput)
+      console.log($scope.selectSuts)
+      console.log($scope.name)
 
       var lineChart = AmCharts.makeChart(id, {
         type: 'serial',
