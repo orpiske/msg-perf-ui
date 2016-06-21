@@ -5,7 +5,11 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.performance', [])
+  angular.module('BlurAdmin.pages.performance', [
+    'BlurAdmin.pages.performance.comparison',
+    'BlurAdmin.pages.performance.viewer',
+    'BlurAdmin.pages.performance.stats'
+  ])
       .config(routeConfig);
 
   /** @ngInject */
@@ -20,16 +24,7 @@
             icon: 'ion-compose',
             order: 250,
           },
-        })
-        .state('stats', {
-          url: '/stats',
-          template : '<ui-view></ui-view>',
-          abstract: true,
-          title: 'Performance Statistics',
-          sidebarMeta: {
-            icon: 'ion-compose',
-            order: 250,
-          },
         });
   }
+  
 })();

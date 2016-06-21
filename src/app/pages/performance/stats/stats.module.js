@@ -1,18 +1,18 @@
 (function () {
   'use strict';
 
-  angular.module('BlurAdmin.pages.performance', [])
+  angular.module('BlurAdmin.pages.performance.stats', [])
       .config(routeConfig);
 
   /** @ngInject */
   function routeConfig($stateProvider) {
     $stateProvider
-            .state('stats', {
+            .state('performance.stats', {
               url: '/stats',
               templateUrl: 'app/pages/performance/stats/stats.html',
-              title: 'Performance Statistics',
+              title: 'Statistics',
               sidebarMeta: {
-                order: 800,
+                order: 700,
               },
             });
   }
