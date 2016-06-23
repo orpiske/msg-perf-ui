@@ -40,8 +40,8 @@
       console.log("Done")
     }
 
-    function DoChart(sut, key) {
-      function DrawChart(sut, throughput) {
+    function DoChart(sut, key, version) {
+      function DrawChart(sut, throughput, version) {
         var layoutColors = baConfig.colors;
         var id = $element[0].getAttribute('id');
 
@@ -127,7 +127,7 @@
         }
       }
 
-      var url = 'http://localhost:9200/' + key + '/message/_search?size=0';
+      var url = 'http://localhost:9200/' + key + '/latency/_search?size=0&version=' + version;
 
       console.log("Sending request to " + url)
       $http.post(url,
@@ -151,7 +151,8 @@
       console.log("Redrawing grapth with selected SUT = "
           + $scope.selectedSut.sut + "(" + $scope.selectedSut.key + ")")
 
-      DoChart($scope.selectedSut.sut, $scope.selectedSut.key)
+      DoChart($scope.selectedSut.sut, $scope.selectedSut.key,
+        $scope.selectedSut.version)
 
      });
 
