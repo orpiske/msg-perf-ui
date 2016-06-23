@@ -145,9 +145,7 @@
         });
     }
 
-    $scope.$watch('selectedSut', function(newValue, oldValue) {
-        console.log("Redrawing grapth with newValue = " + newValue)
-        console.log("Redrawing grapth with oldValue = " + oldValue)
+    $scope.$watch('selectedSut', function() {
         console.log("Redrawing grapth with selected SUT = "
           + $scope.selectedSut.sut + "(" + $scope.selectedSut.key + ")")
 

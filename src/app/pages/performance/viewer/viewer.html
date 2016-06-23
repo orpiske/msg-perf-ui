@@ -2,12 +2,13 @@
 
   <div class="form-group" ng-controller="ViewerCtrl">
 
-    <!-- TODO Defaults to [1] because I am using 0 to have an error result -->
+    <p>Receiver:</p>
+    <!-- TODO Defaults to [3] because I am using 0 to have an error result -->
     <select class="form-control selectpicker" title="Please select a SUT" selectpicker
 
-          ng-init="selectedSut = suts[1]"
+          ng-init="selectedSut = suts[3]"
           ng-model="selectedSut"
-          ng-options="sut as sut.sut for sut in suts"
+          ng-options="sut as sut.version group by sut.sut for sut in suts"
           ng-change="updateChart(selectedSut.key, selectedSut.sut)"
     />
 
