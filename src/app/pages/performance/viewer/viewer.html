@@ -1,24 +1,26 @@
 <div class="widgets">
 
-  <div class="form-group" ng-controller="ViewerCtrl">
+  <div class="form-group" ng-controller="SutCtrl">
 
-    <p>Receiver:</p>
-    <!-- TODO Defaults to [3] because I am using 0 to have an error result -->
-    <select class="form-control selectpicker" title="Please select a SUT" selectpicker
+    <div class="form-group" ng-if="loadedSuts" ng-controller="ViewerCtrl">
 
-          ng-init="selectedSut = suts[3]"
-          ng-model="selectedSut"
-          ng-options="sut as sut.version group by sut.sut for sut in suts"
-          ng-change="updateChart(selectedSut.key, selectedSut.sut)"
-    />
+      <p>Receiver:</p>
+      <!-- TODO Defaults to [3] because I am using 0 to have an error result -->
+      <select class="form-control selectpicker" title="Please select a SUT" selectpicker
 
-    <div class="row">
-      <div class="col-md-12"
-           ba-panel
-           ba-panel-title="Broker Performance for {{ selectedSut }} - {{ selectedSut.sut }}"
-           ba-panel-class="with-scroll">
-          <div id="lineChart" class="admin-chart"
-              ng-controller="ThroughputCtrl"></div>
+            ng-init="selectedSut = suts[0]"
+            ng-model="selectedSut"
+            ng-options='sut as (sut.sut + " (" + sut.version + ")") group by sut.sut for sut in suts'
+            ng-change="updateChart(selectedSut.key, selectedSut.sut)"
+      />
+
+      <div class="row">
+        <div class="col-md-12"
+             ba-panel
+             ba-panel-title="Broker Performance for {{ selectedSut }} {{ selectedSut.sut }} {{ selectedSut.version }}"
+             ba-panel-class="with-scroll">
+            <div id="lineChart" class="admin-chart" ng-controller="ThroughputCtrl"></div>
+        </div>
       </div>
     </div>
   </div>

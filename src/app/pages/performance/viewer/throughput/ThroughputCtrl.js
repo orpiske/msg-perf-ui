@@ -145,14 +145,16 @@
         });
     }
 
+    $scope.updateChart = DoChart;
+
     $scope.$watch('selectedSut', function() {
-        console.log("Redrawing grapth with selected SUT = "
+      console.log("Redrawing grapth with selected SUT = "
           + $scope.selectedSut.sut + "(" + $scope.selectedSut.key + ")")
 
-        DoChart($scope.selectedSut.sut, $scope.selectedSut.key)
+      DoChart($scope.selectedSut.sut, $scope.selectedSut.key)
+
      });
 
-      $scope.updateChart = DoChart;
   }
 
 })();
