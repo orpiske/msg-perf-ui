@@ -2,20 +2,22 @@
 
   <div class="form-group" ng-controller="ViewerCtrl">
 
+    <!-- TODO Defaults to [1] because I am using 0 to have an error result -->
     <select class="form-control selectpicker" title="Please select a SUT" selectpicker
-          ng-init="selectSuts = suts[0]"
-          ng-model="selectSuts"
+
+          ng-init="selectedSut = suts[1]"
+          ng-model="selectedSut"
           ng-options="sut as sut.sut for sut in suts"
-          ng-change="updateChart(selectSuts.sut)"
+          ng-change="updateChart(selectedSut.key, selectedSut.sut)"
     />
 
     <div class="row">
       <div class="col-md-12"
            ba-panel
-           ba-panel-title="Broker Performance for {{ selectSuts.sut }}"
+           ba-panel-title="Broker Performance for {{ selectedSut }} - {{ selectedSut.sut }}"
            ba-panel-class="with-scroll">
           <div id="lineChart" class="admin-chart"
-              ng-controller="ThroughputCtrl" ng-init="init(selectSuts.sut, 'abc')"></div>
+              ng-controller="ThroughputCtrl"></div>
       </div>
     </div>
   </div>

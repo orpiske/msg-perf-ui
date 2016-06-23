@@ -40,7 +40,7 @@
       console.log("Done")
     }
 
-    function DoChart(sut) {
+    function DoChart(sut, key) {
       function DrawChart(sut, throughput) {
         var layoutColors = baConfig.colors;
         var id = $element[0].getAttribute('id');
@@ -127,37 +127,32 @@
         }
       }
 
-      if (sut == "JBoss A-MQ 7") {
-        $http.post('http://localhost:9200//artemis/message/_search?size=0',
-            "{\"aggs\" : {\"throughput\" : {\"date_histogram\" : {\"field\" : \"creation\", \"interval\" : \"1s\" } } } }"
-          ).then(function(response) {
-              var throughput=response.data.aggregations.throughput.buckets
-              DrawChart(sut, throughput)
-          });
-      }
-      else {
-        $http.post('http://localhost:9200//amq6/message/_search?size=0',
-            "{\"aggs\" : {\"throughput\" : {\"date_histogram\" : {\"field\" : \"creation\", \"interval\" : \"1s\" } } } }"
-          ).then(function(response) {
-              var throughput=response.data.aggregations.throughput.buckets
-              DrawChart(sut, throughput)
-          });
+      var url = 'http://localhost:9200/' + key + '/message/_search?size=0';
 
-      }
+      console.log("Sending request to " + url)
+      $http.post(url,
+          "{\"aggs\" : {\"throughput\" : {\"date_histogram\" : {\"field\" : \"creation\", \"interval\" : \"1s\" } } } }"
+        ).then(function(response) {
+            var throughput=response.data.aggregations.throughput.buckets
+            DrawChart(sut, throughput)
+        }, function(response) {
+            if (response.status == 404) {
+              alert('Did not find any results for : ' + sut)
+            } else {
+              alert('Unable to contact server: ' + response)
+            }
 
+        });
     }
 
-    $scope.$watch('selectSuts', function(newValue, oldValue) {
+    $scope.$watch('selectedSut', function(newValue, oldValue) {
         console.log("Redrawing grapth with newValue = " + newValue)
-        // something = selectSuts.sut
-        // alert('hey, selectSuts has changed!');
         console.log("Redrawing grapth with oldValue = " + oldValue)
-        console.log("Redrawing grapth with selected SUT = " + $scope.selectSuts.sut)
+        console.log("Redrawing grapth with selected SUT = "
+          + $scope.selectedSut.sut + "(" + $scope.selectedSut.key + ")")
 
-        DoChart($scope.selectSuts.sut)
+        DoChart($scope.selectedSut.sut, $scope.selectedSut.key)
      });
-
-      // DoChart($scope.selectSuts.sut)
 
       $scope.updateChart = DoChart;
   }
