@@ -6,6 +6,7 @@
           ng-init="selectSuts = suts[0]"
           ng-model="selectSuts"
           ng-options="sut as sut.sut for sut in suts"
+          ng-change="updateChart(selectSuts.sut)"
     />
 
     <div class="row">
@@ -13,8 +14,8 @@
            ba-panel
            ba-panel-title="Broker Performance for {{ selectSuts.sut }}"
            ba-panel-class="with-scroll">
-        <!-- <div ng-include="'app/pages/performance/stats/throughput/throughput.html'"></div> -->
-          <div id="lineChart" class="admin-chart" ng-controller="ThroughputCtrl" ng-init="init('{{ selectSuts.sut }}', 'abc')"></div>
+          <div id="lineChart" class="admin-chart"
+              ng-controller="ThroughputCtrl" ng-init="init(selectSuts.sut, 'abc')"></div>
       </div>
     </div>
   </div>
