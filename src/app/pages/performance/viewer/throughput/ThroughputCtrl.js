@@ -15,6 +15,7 @@
     var layoutPaths;
     var http;
 
+
     if (this.baConfig == null) {
       console.log("Setting the value for baConfig")
       this.baConfig = baConfig;
@@ -41,6 +42,10 @@
     }
 
     function DoChart(sut, key, version) {
+      // var queryField = element(by.model('$dataField'));
+
+      // alert('Value = ' + $scope.date.initial)
+
       function DrawChart(sut, throughput, version) {
         var layoutColors = baConfig.colors;
         var id = $element[0].getAttribute('id');

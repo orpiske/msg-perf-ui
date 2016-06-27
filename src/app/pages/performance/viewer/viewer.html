@@ -5,14 +5,31 @@
     <div class="form-group" ng-if="loadedSuts" ng-controller="ViewerCtrl">
 
       <p>Receiver:</p>
-      <!-- TODO Defaults to [3] because I am using 0 to have an error result -->
-      <select class="form-control selectpicker" title="Please select a SUT" selectpicker
+
+      <div class="row">
+        <form name="queryForm">
+          <!-- TODO Defaults to [3] because I am using 0 to have an error result -->
+          <select class="form-control selectpicker" title="Please select a SUT" selectpicker
 
             ng-init="selectedSut = suts[0]"
             ng-model="selectedSut"
             ng-options='sut as (sut.sut + " (" + sut.version + ")") group by sut.sut for sut in suts'
             ng-change="updateChart(selectedSut.key, selectedSut.sut)"
-      />
+          />
+
+          <div class="form-group">
+            <label for="dateInput01">Text</label>
+            <input type="Test date"
+              placeholder="yyyy-MM-dd HH:mm:ss.SSS"
+              maxlength="23"
+              class="form-control" name="dateRange" ng-model="date.initial" id="dateInput01">
+          </div>
+
+          <select class="form-control durationpicker" selectpicker title="Duration"
+                  ng-model="durationpicker"
+                  ng-options="duration as duration.label for duration in durations">
+          </select>
+      </form>
 
       <div class="row">
         <div class="col-md-12"
