@@ -9,7 +9,7 @@
       .controller('ThroughputCtrl', ThroughputCtrl);
 
   /** @ngInject */
-  function ThroughputCtrl($scope, baConfig, $element, layoutPaths, $http) {
+  function ThroughputCtrl($scope, mptUIConfig, baConfig, $element, layoutPaths, $http) {
     var baConfig;
     var element;
     var layoutPaths;
@@ -132,7 +132,7 @@
         }
       }
 
-      var url = 'http://localhost:9200/' + key + '/latency/_search?size=0&version=' + version;
+      var url = mptUIConfig.apiUrl + "/" + key + '/latency/_search?size=0&version=' + version;
 
       console.log("Sending request to " + url)
       $http.post(url,

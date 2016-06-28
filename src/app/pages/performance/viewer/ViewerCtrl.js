@@ -5,7 +5,7 @@
       .controller('ViewerCtrl', ViewerCtrl);
 
   /** @ngInject */
-  function ViewerCtrl($scope, $http) {
+  function ViewerCtrl($scope, mptUIConfig, $http) {
     $scope.date = {
       initial: "",
       final: "",

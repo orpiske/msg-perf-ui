@@ -9,12 +9,11 @@
       .controller('ThroughputCtrl', ThroughputCtrl);
 
   /** @ngInject */
-  function ThroughputCtrl($scope, baConfig, $element, layoutPaths, $http) {
+  function ThroughputCtrl($scope, mptUIConfig, baConfig, $element, layoutPaths, $http) {
     var baConfig;
     var element;
     var layoutPaths;
     var http;
-
 
     if (this.baConfig == null) {
       console.log("Setting the value for baConfig")
@@ -39,6 +38,10 @@
       console.log("Setting the value for http")
       this.http = http;
       console.log("Done")
+    }
+
+    if (this.mptUIConfig == null) {
+      this.mptUIConfig = mptUIConfig;
     }
 
     function DoChart(sut, key, version) {
@@ -132,7 +135,7 @@
         }
       }
 
-      var url = 'http://localhost:9200/' + key + '/latency/_search?size=0&version=' + version;
+      var url = mptUIConfig.apiUrl + "/" + key + '/latency/_search?size=0&version=' + version;
 
       console.log("Sending request to " + url)
       $http.post(url,

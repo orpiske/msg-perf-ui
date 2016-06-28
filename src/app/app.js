@@ -15,4 +15,7 @@ angular.module('BlurAdmin', [
 
   'BlurAdmin.theme',
   'BlurAdmin.pages'
-]);
+])
+  .constant("mptUIConfig", {
+        "apiUrl": "http://" + window.location.hostname + ":" + 9200
+    });
