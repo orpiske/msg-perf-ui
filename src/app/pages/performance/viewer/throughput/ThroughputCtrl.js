@@ -16,46 +16,37 @@
     var http;
 
     if (this.baConfig == null) {
-      console.log("Setting the value for baConfig")
+      // console.log("Setting the value for baConfig")
       this.baConfig = baConfig;
-      console.log("Done")
-
     }
 
     if (this.element == null) {
-      console.log("Setting the value for element")
+      // console.log("Setting the value for element")
       this.element = element;
-      console.log("Done")
     }
 
     if (this.layoutPaths == null) {
-      console.log("Setting the value for layoutPaths")
+      // console.log("Setting the value for layoutPaths")
       this.layoutPaths = layoutPaths;
-      console.log("Done")
     }
 
     if (this.http == null) {
-      console.log("Setting the value for http")
+      // console.log("Setting the value for http")
       this.http = http;
-      console.log("Done")
     }
 
     if (this.mptUIConfig == null) {
       this.mptUIConfig = mptUIConfig;
     }
 
-    function DoChart(sut, key, version) {
-      // var queryField = element(by.model('$dataField'));
+    function DoChart(key, test_id, version) {
+      
 
-      // alert('Value = ' + $scope.date.initial)
-
-      function DrawChart(sut, throughput, version) {
+      function DrawChart(throughput) {
         var layoutColors = baConfig.colors;
         var id = $element[0].getAttribute('id');
 
-        console.log("Througput (2)");
-        console.log("BA Config: " + baConfig);
-        console.log("Selected SUT: " + sut);
+        console.log("Drawing chart");
 
         var lineChart = AmCharts.makeChart(id, {
           type: 'serial',
@@ -137,12 +128,13 @@
 
       var url = mptUIConfig.apiUrl + "/" + key + '/latency/_search?size=0&version=' + version;
 
+
       console.log("Sending request to " + url)
       $http.post(url,
           "{\"aggs\" : {\"throughput\" : {\"date_histogram\" : {\"field\" : \"creation\", \"interval\" : \"1s\" } } } }"
         ).then(function(response) {
             var throughput=response.data.aggregations.throughput.buckets
-            DrawChart(sut, throughput)
+            DrawChart(throughput)
         }, function(response) {
             if (response.status == 404) {
               alert('Did not find any results for : ' + sut)
@@ -153,16 +145,19 @@
         });
     }
 
+
+
+    $scope.tpInitFunction = function(key, test_id, version) {
+        console.log("Initializing ...")
+        $scope.$watch('selected.active.test && selected.active.sut', function() {
+
+          console.log("Redrawing graph for " + key)
+
+            $scope.updateChart(key, test_id, version)
+            });
+    }
+
     $scope.updateChart = DoChart;
-
-    $scope.$watch('selectedSut', function() {
-      console.log("Redrawing grapth with selected SUT = "
-          + $scope.selectedSut.sut + "(" + $scope.selectedSut.key + ")")
-
-      DoChart($scope.selectedSut.sut, $scope.selectedSut.key,
-        $scope.selectedSut.version)
-
-     });
 
   }
 

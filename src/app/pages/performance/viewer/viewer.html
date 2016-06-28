@@ -2,46 +2,50 @@
 
   <div ng-controller="SutCtrl">
 
-    <div class="form-group" ng-if="loadedSuts" ng-controller="ViewerCtrl">
-
-
-
+    <div class="form-group" ng-if="loaded.suts" ng-controller="ViewerCtrl">
       <div class="row">
         <label for="queryForm">Receiver:</label>
         <form name="queryForm">
           <!-- TODO Defaults to [3] because I am using 0 to have an error result -->
-          <select class="form-control selectpicker" title="Please select a SUT" selectpicker
-
-            ng-init="selectedSut = suts[0]"
-            ng-model="selectedSut"
+          <select class="form-control" title="Please select a SUT" selectpicker
+            ng-init="selected.active.sut = suts[0]"
+            ng-model="selected.active.sut"
             ng-options='sut as (sut.sut + " (" + sut.version + ")") group by sut.sut for sut in suts'
-            ng-change="updateChart(selectedSut.key, selectedSut.sut)"
+            ng-change="loadTests(selected.active.sut.key)"
+            />
+
+          <select class="form-control selectpicker" title="Please select a test" selectpicker
+            ng-init="selected.active.test = testInfo[0]"
+            ng-if="loaded.suts && loaded.tests"
+            ng-model="selected.active.test"
+            ng-options='test as (test.test_id + " (" + test.os_name + "-" + test.os_version + " " + test.protocol + " " + test.start_time + ")") for test in testInfo'
+
           />
-
-
-          <div class="form-group">
-            <label for="dateInput01">Initial Date Time:</label>
-            <input type="Test date"
-              placeholder="yyyy-MM-dd HH:mm:ss.SSS"
-              maxlength="23"
-              class="form-control" name="dateRange" ng-model="date.initial" id="dateInput01">
-          </div>
-
+          
           <select class="form-control durationpicker" selectpicker title="Duration"
-                  ng-model="durationpicker"
-                  ng-options="duration as duration.label for duration in durations">
+                ng-model="durationpicker"
+                ng-options="duration as duration.label for duration in durations">
           </select>
-      </form>
+        </form>
 
-      <div class="row">
-        <div class="col-md-12"
-             ba-panel
-             ba-panel-title="Broker ThroughPerformance for {{ selectedSut.sut }} {{ selectedSut.version }}"
-             ba-panel-class="with-scroll">
-            <div id="lineChart" class="admin-chart" ng-controller="ThroughputCtrl"></div>
+        <div ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)">
+          <div class="row">
+            <div class="col-md-12"
+                ba-panel
+                ba-panel-title="Broker ThroughPerformance for {{ selected.active.sut.sut }} {{ selected.active.sut.version }}: {{ selected.active.test.test_id }}"
+                ba-panel-class="with-scroll">
+                  <div id="lineChart" class="admin-chart"
+                    ng-controller="ThroughputCtrl"
+                    ng-init="tpInitFunction(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version )"
+                  />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
+
+
+
+  </div>
 </div>
