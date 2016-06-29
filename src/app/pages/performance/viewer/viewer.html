@@ -24,16 +24,28 @@
             />
           </div>
 
-          <div class="col-md-4" ng-if="loaded.suts && loaded.tests">
-            <select class="form-control durationpicker" selectpicker title="Duration"
+          <div class="col-md-1" ng-if="loaded.suts && loaded.tests">
+              <select class="form-control durationpicker" selectpicker title="Start Time"
+                ng-init="selected.active.start_time = start_times[0]"
+                ng-model="selected.active.start_time"
+                ng-options="start_time as start_time.label for start_time in start_times"
+                ng-change="tpInitFunction(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value)"
+                >
+              </select>
+          </div>
+
+          <div class="col-md-1" ng-if="loaded.suts && loaded.tests">
+              <select class="form-control durationpicker" selectpicker title="Duration"
                 ng-init="selected.active.duration = durations[0]"
                 ng-model="selected.active.duration"
                 ng-options="duration as duration.label for duration in durations">
               </select>
-            </div>
+          </div>
+
+
         </form>
 
-        <div class="col-md-12"
+        <div class="col-md-12">
           <p></p>
         </div>
         <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)">
@@ -44,11 +56,16 @@
                 ba-panel-class="with-scroll">
                   <div id="lineChart" class="admin-chart"
                     ng-controller="ThroughputCtrl"
-                    ng-init="tpInitFunction(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.duration.value )"
+                    ng-init="tpInitFunction(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value)"
                   />
               </div>
             </div>
           </div>
+          <div class="col-md-12">
+            <div class="col-md-8" />
+
+          </div>
+
         </div>
       </div>
   </div>

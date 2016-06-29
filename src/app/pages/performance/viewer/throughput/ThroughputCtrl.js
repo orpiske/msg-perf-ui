@@ -39,7 +39,7 @@
       this.mptUIConfig = mptUIConfig;
     }
 
-    function DoChart(key, test_id, version, date, duration) {
+    function DoChart(key, test_id, version, date, start_time, duration) {
 
 
       function DrawChart(throughput) {
@@ -158,7 +158,7 @@
             },\
             { \"range\" : { \
                 \"creation\" : {\
-                  \"gt\" : \"" + date + ".000\",\
+                  \"gt\" : \"" + date + ".000||+" + start_time + "m\",\
                   \"lt\" : \"" + date + ".000||+" + duration + "m\" \
                 } \
               }\
@@ -189,7 +189,7 @@
             if (response.status == 404) {
               alert('Did not find any results for : ' + sut)
             } else {
-              alert('Unable to contact server: ' + response)
+              alert('Unable to contact server: ' + response.status)
             }
 
         });
@@ -197,13 +197,27 @@
 
 
 
-    $scope.tpInitFunction = function(key, test_id, version, date, duration) {
+    $scope.tpInitFunction = function(key, test_id, version, date, start_time, duration) {
         console.log("Initializing ...")
-        $scope.$watch('selected.active.test && selected.active.sut', function() {
+        $scope.$watch('selected.active.test && selected.active.sut && selected.active.duration && selected.active.start_time', function() {
 
-          console.log("Redrawing graph for " + key + " " + date + " - " + duration)
+          console.log("Redrawing graph for " + key + " " + date + "/" + start_time + " - " + duration)
 
-          $scope.updateChart(key, test_id, version, date, duration)
+          $scope.updateChart(key, test_id, version, date, start_time, duration)
+        });
+
+        $scope.$watch('selected.active.start_time', function() {
+
+          console.log("Redrawing graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
+
+          $scope.updateChart(key, test_id, version, date, $scope.selected.active.start_time.value, $scope.selected.active.duration.value)
+        });
+
+        $scope.$watch('selected.active.duration', function() {
+
+          console.log("Redrawing graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
+
+          $scope.updateChart(key, test_id, version, date, $scope.selected.active.start_time.value, $scope.selected.active.duration.value)
         });
     }
 
