@@ -19,6 +19,7 @@
       sut: null,
       start_time: null,
       duration: null,
+      range: null,
     };
 
     var suts;

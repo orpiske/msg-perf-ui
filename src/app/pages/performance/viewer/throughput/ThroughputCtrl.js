@@ -159,7 +159,7 @@
             { \"range\" : { \
                 \"creation\" : {\
                   \"gt\" : \"" + date + ".000||+" + start_time + "m\",\
-                  \"lt\" : \"" + date + ".000||+" + duration + "m\" \
+                  \"lt\" : \"" + date + ".000||+" + start_time + "m+" + duration + "m\" \
                 } \
               }\
             }\
@@ -178,7 +178,7 @@
     } \
 }"
 
-      console.log("Request: " + requestData)
+      //console.log("Request: " + requestData)
 
       // "{\"aggs\" : {\"throughput\" : {\"date_histogram\" : {\"field\" : \"creation\", \"interval\" : \"1s\" } } } }"
       console.log("Sending request to " + url)

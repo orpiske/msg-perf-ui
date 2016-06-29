@@ -29,7 +29,6 @@
                 ng-init="selected.active.start_time = start_times[0]"
                 ng-model="selected.active.start_time"
                 ng-options="start_time as start_time.label for start_time in start_times"
-                ng-change="tpInitFunction(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value)"
                 >
               </select>
           </div>
@@ -41,8 +40,6 @@
                 ng-options="duration as duration.label for duration in durations">
               </select>
           </div>
-
-
         </form>
 
         <div class="col-md-12">
@@ -60,10 +57,6 @@
                   />
               </div>
             </div>
-          </div>
-          <div class="col-md-12">
-            <div class="col-md-8" />
-
           </div>
 
         </div>
