@@ -46,7 +46,7 @@
         var layoutColors = baConfig.colors;
         var id = $element[0].getAttribute('id');
 
-        console.log("Drawing chart");
+        //console.log("Drawing throughput chart: " + throughput);
 
         var lineChart = AmCharts.makeChart(id, {
           type: 'serial',
@@ -73,7 +73,7 @@
               lineThickness: 1,
               negativeLineColor: layoutColors.warning,
               type: 'smoothedLine',
-              valueField: 'doc_count'
+              valueField: 'rate'
             }
           ],
           chartScrollbar: {
@@ -92,15 +92,15 @@
             selectedGraphLineAlpha: 1
           },
           chartCursor: {
-            categoryBalloonDateFormat: 'YYYY-MM-DD HH:NN:SS.QQQ',
+            categoryBalloonDateFormat: 'YYYY-MM-DD HH:NN:SS',
             cursorAlpha: 0,
             valueLineEnabled: true,
             valueLineBalloonEnabled: true,
             valueLineAlpha: 0.5,
             fullWidth: true
           },
-          dataDateFormat: 'YYYY-MM-DD HH:NN:SS.QQQ',
-          categoryField: 'key_as_string',
+          dataDateFormat: 'YYYY-MM-DD HH:NN:SS',
+          categoryField: 'ts',
           categoryAxis: {
             minPeriod: 'ss',
             parseDates: true,
@@ -126,8 +126,7 @@
         }
       }
 
-      var url = mptUIConfig.apiUrl + "/" + key + '/latency/_search?size=0&version=' + version;
-
+      var url = mptUIConfig.apiUrl + "/" + key + '/throughput/_search';
 
 
       /*
@@ -157,9 +156,9 @@
               }\
             },\
             { \"range\" : { \
-                \"creation\" : {\
-                  \"gt\" : \"" + date + ".000||+" + start_time + "m\",\
-                  \"lt\" : \"" + date + ".000||+" + start_time + "m+" + duration + "m\" \
+                \"ts\" : {\
+                  \"gt\" : \"" + date + "||+" + start_time + "m\",\
+                  \"lt\" : \"" + date + "||+" + start_time + "m+" + duration + "m\" \
                 } \
               }\
             }\
@@ -167,24 +166,22 @@
         }\
       }\
     }\
-  },\
-  \"aggs\" : { \
-        \"throughput\" : { \
-            \"date_histogram\" : { \
-                \"field\" : \"creation\", \
-                \"interval\" : \"1s\" \
-            } \
-        } \
-    } \
+  }\
 }"
 
-      //console.log("Request: " + requestData)
-
-      // "{\"aggs\" : {\"throughput\" : {\"date_histogram\" : {\"field\" : \"creation\", \"interval\" : \"1s\" } } } }"
       console.log("Sending request to " + url)
+      console.log("Request data " + requestData)
       $http.post(url,requestData).then(function(response) {
-            var throughput=response.data.aggregations.throughput.buckets
-            DrawChart(throughput)
+            var reply = response.data.hits.hits;
+            var ret = new Array();
+
+            for (var idx in reply) {
+              console.log("Rate: " + reply[idx]._source.rate);
+              ret[idx] = { "ts": reply[idx]._source.ts, "rate": reply[idx]._source.rate } ;
+            }
+
+
+            DrawChart(ret)
         }, function(response) {
             if (response.status == 404) {
               alert('Did not find any results for : ' + sut)
@@ -197,31 +194,31 @@
 
 
 
-    $scope.tpInitFunction = function(key, test_id, version, date, start_time, duration) {
+    $scope.tpInitThroughput = function(key, test_id, version, date, start_time, duration) {
         console.log("Initializing ...")
         $scope.$watch('selected.active.test && selected.active.sut && selected.active.duration && selected.active.start_time', function() {
 
-          console.log("Redrawing graph for " + key + " " + date + "/" + start_time + " - " + duration)
+          console.log("Redrawing throughput graph for " + key + " " + date + "/" + start_time + " - " + duration)
 
-          $scope.updateChart(key, test_id, version, date, start_time, duration)
+          $scope.updateThroughputChart(key, test_id, version, date, start_time, duration)
         });
 
         $scope.$watch('selected.active.start_time', function() {
 
-          console.log("Redrawing graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
+          console.log("Redrawing throughput graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
 
-          $scope.updateChart(key, test_id, version, date, $scope.selected.active.start_time.value, $scope.selected.active.duration.value)
+          $scope.updateThroughputChart(key, test_id, version, date, $scope.selected.active.start_time.value, $scope.selected.active.duration.value)
         });
 
         $scope.$watch('selected.active.duration', function() {
 
-          console.log("Redrawing graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
+          console.log("Redrawing throughput graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
 
-          $scope.updateChart(key, test_id, version, date, $scope.selected.active.start_time.value, $scope.selected.active.duration.value)
+          $scope.updateThroughputChart(key, test_id, version, date, $scope.selected.active.start_time.value, $scope.selected.active.duration.value)
         });
     }
 
-    $scope.updateChart = DoChart;
+    $scope.updateThroughputChart = DoChart;
 
   }
 

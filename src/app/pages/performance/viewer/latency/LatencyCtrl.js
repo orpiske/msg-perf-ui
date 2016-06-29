@@ -39,14 +39,14 @@
       this.mptUIConfig = mptUIConfig;
     }
 
-    function DoChart(key, test_id, version) {
+    function DoChart(key, test_id, version, date, start_time, duration) {
 
 
       function DrawChart(throughput) {
         var layoutColors = baConfig.colors;
         var id = $element[0].getAttribute('id');
 
-        console.log("Drawing chart");
+        console.log("Drawing latency chart");
 
         var lineChart = AmCharts.makeChart(id, {
           type: 'serial',
@@ -129,17 +129,64 @@
       var url = mptUIConfig.apiUrl + "/" + key + '/latency/_search?size=0&version=' + version;
 
 
+
+      /*
+       * This is ugly. I know and I agree. I will fix this later, after
+       * I learn how to do this the correct way in this hideous
+       * language
+       */
+      var requestData = "{\
+  \"query\" : {\
+    \"constant_score\" : { \
+      \"filter\" : {\
+        \"bool\" : {\
+          \"must\" : [ \
+            { \
+              \"term\" : { \
+                \"test_id\": \"" + test_id + "\" \
+              } \
+            },\
+            { \
+              \"term\" : { \
+                \"version\": \"" + version + "\" \
+              }\
+            },\
+            { \
+              \"term\" : { \
+                \"direction\": \"receiver\" \
+              }\
+            },\
+            { \"range\" : { \
+                \"creation\" : {\
+                  \"gt\" : \"" + date + ".000||+" + start_time + "m\",\
+                  \"lt\" : \"" + date + ".000||+" + start_time + "m+" + duration + "m\" \
+                } \
+              }\
+            }\
+          ]\
+        }\
+      }\
+    }\
+  },\
+  \"aggs\" : { \
+        \"throughput\" : { \
+            \"date_histogram\" : { \
+                \"field\" : \"creation\", \
+                \"interval\" : \"1s\" \
+            } \
+        } \
+    } \
+}"
+
       console.log("Sending request to " + url)
-      $http.post(url,
-          "{\"aggs\" : {\"throughput\" : {\"date_histogram\" : {\"field\" : \"creation\", \"interval\" : \"1s\" } } } }"
-        ).then(function(response) {
+      $http.post(url,requestData).then(function(response) {
             var throughput=response.data.aggregations.throughput.buckets
             DrawChart(throughput)
         }, function(response) {
             if (response.status == 404) {
               alert('Did not find any results for : ' + sut)
             } else {
-              alert('Unable to contact server: ' + response)
+              alert('Unable to contact server: ' + response.status)
             }
 
         });
@@ -147,17 +194,31 @@
 
 
 
-    $scope.tpInitFunction = function(key, test_id, version) {
+    $scope.tpInitLatency = function(key, test_id, version, date, start_time, duration) {
         console.log("Initializing ...")
-        $scope.$watch('selected.active.test && selected.active.sut', function() {
+        $scope.$watch('selected.active.test && selected.active.sut && selected.active.duration && selected.active.start_time', function() {
 
-          console.log("Redrawing graph for " + key)
+          console.log("Redrawing latency graph for " + key + " " + date + "/" + start_time + " - " + duration)
 
-            $scope.updateChart(key, test_id, version)
-            });
+          $scope.updateLatencyChart(key, test_id, version, date, start_time, duration)
+        });
+
+        $scope.$watch('selected.active.start_time', function() {
+
+          console.log("Redrawing latency graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
+
+          $scope.updateLatencyChart(key, test_id, version, date, $scope.selected.active.start_time.value, $scope.selected.active.duration.value)
+        });
+
+        $scope.$watch('selected.active.duration', function() {
+
+          console.log("Redrawing latency graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
+
+          $scope.updateLatencyChart(key, test_id, version, date, $scope.selected.active.start_time.value, $scope.selected.active.duration.value)
+        });
     }
 
-    $scope.updateChart = DoChart;
+    $scope.updateLatencyChart = DoChart;
 
   }
 

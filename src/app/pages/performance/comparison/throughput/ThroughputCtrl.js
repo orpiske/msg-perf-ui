@@ -6,10 +6,10 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.performance')
-      .controller('ThroughputCtrl', ThroughputCtrl);
+      .controller('ThroughputCompCtrl', ThroughputCompCtrl);
 
   /** @ngInject */
-  function ThroughputCtrl($scope, baConfig, $element, layoutPaths, $http) {
+  function ThroughputCompCtrl($scope, baConfig, $element, layoutPaths, $http) {
     function DrawChart($scope, baConfig, $element, layoutPaths, throughput) {
       var layoutColors = baConfig.colors;
       var id = $element[0].getAttribute('id');
