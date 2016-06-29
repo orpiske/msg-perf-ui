@@ -3,34 +3,43 @@
   <div ng-controller="SutCtrl">
 
     <div class="form-group" ng-if="loaded.suts" ng-controller="ViewerCtrl">
-      <div class="row">
+      <div>
         <label for="queryForm">Receiver:</label>
         <form name="queryForm">
           <!-- TODO Defaults to [3] because I am using 0 to have an error result -->
-          <select class="form-control" title="Please select a SUT" selectpicker
-            ng-init="selected.active.sut = suts[0]"
-            ng-model="selected.active.sut"
-            ng-options='sut as (sut.sut + " (" + sut.version + ")") group by sut.sut for sut in suts'
-            ng-change="loadTests(selected.active.sut.key)"
+          <div class="col-md-4">
+            <select class="form-control" title="Please select a SUT" selectpicker
+              ng-init="selected.active.sut = suts[0]"
+              ng-model="selected.active.sut"
+              ng-options='sut as (sut.sut + " (" + sut.version + ")") group by sut.sut for sut in suts'
+              ng-change="loadTests(selected.active.sut.key)"
+              />
+          </div>
+
+          <div class="col-md-4" ng-if="loaded.suts && loaded.tests">
+            <select class="form-control selectpicker" title="Please select a test" selectpicker
+              ng-init="selected.active.test = testInfo[0]"
+              ng-model="selected.active.test"
+              ng-options='test as (test.test_id + " (" + test.os_name + "-" + test.os_version + " " + test.protocol + " " + test.start_time + ")") for test in testInfo'
             />
+          </div>
 
-          <select class="form-control selectpicker" title="Please select a test" selectpicker
-            ng-init="selected.active.test = testInfo[0]"
-            ng-if="loaded.suts && loaded.tests"
-            ng-model="selected.active.test"
-            ng-options='test as (test.test_id + " (" + test.os_name + "-" + test.os_version + " " + test.protocol + " " + test.start_time + ")") for test in testInfo'
-
-          />
-          
-          <select class="form-control durationpicker" selectpicker title="Duration"
+          <div class="col-md-4" ng-if="loaded.suts && loaded.tests">
+            <select class="form-control durationpicker" selectpicker title="Duration"
                 ng-model="durationpicker"
+                ng-init="duration = durations[0]"
+
                 ng-options="duration as duration.label for duration in durations">
-          </select>
+              </select>
+            </div>
         </form>
 
-        <div ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)">
+        <div class="col-md-12"
+          <p></p>
+        </div>
+        <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)">
           <div class="row">
-            <div class="col-md-12"
+            <div
                 ba-panel
                 ba-panel-title="Broker ThroughPerformance for {{ selected.active.sut.sut }} {{ selected.active.sut.version }}: {{ selected.active.test.test_id }}"
                 ba-panel-class="with-scroll">
@@ -43,9 +52,5 @@
           </div>
         </div>
       </div>
-
-
-
-
   </div>
 </div>
