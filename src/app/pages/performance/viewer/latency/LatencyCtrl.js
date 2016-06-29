@@ -186,7 +186,8 @@
             if (response.status == 404) {
               alert('Did not find any results for : ' + sut)
             } else {
-              alert('Unable to contact server: ' + response.status)
+              alert('Unsuccessfull server response. Error code: '
+                + response.status)
             }
 
         });

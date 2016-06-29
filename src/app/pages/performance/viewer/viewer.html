@@ -53,7 +53,7 @@
                 ba-panel-class="with-scroll">
                   <div id="throughputChart" class="admin-chart"
                     ng-controller="ThroughputCtrl"
-                    ng-init="tpInitThroughput(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value)"
+                    ng-init="tpInitThroughput(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value, 'receiver')"
                   />
               </div>
             </div>
@@ -66,10 +66,26 @@
                   ba-panel
                   ba-panel-title="Broker Latency Performance for {{ selected.active.sut.sut }} {{ selected.active.sut.version }}: {{ selected.active.test.test_id }}"
                   ba-panel-class="with-scroll">
-                    <div id="lineChart" class="admin-chart"
+                    <div id="latencyChart" class="admin-chart"
                       ng-controller="LatencyCtrl"
                       ng-init="tpInitLatency(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value)"
                     />
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)">
+          <div class="row">
+            <div
+                ba-panel
+                ba-panel-title="Broker Sender Throughput Performance for {{ selected.active.sut.sut }} {{ selected.active.sut.version }}: {{ selected.active.test.test_id }}"
+                ba-panel-class="with-scroll">
+                  <div id="senderThroughputChart" class="admin-chart"
+                    ng-controller="ThroughputCtrl"
+                    ng-init="tpInitThroughput(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value, 'sender')"
+                  />
               </div>
             </div>
           </div>

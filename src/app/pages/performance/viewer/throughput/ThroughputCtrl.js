@@ -39,7 +39,7 @@
       this.mptUIConfig = mptUIConfig;
     }
 
-    function DoChart(key, test_id, version, date, start_time, duration) {
+    function DoChart(key, test_id, version, date, start_time, duration, direction) {
 
 
       function DrawChart(throughput) {
@@ -102,7 +102,7 @@
           dataDateFormat: 'YYYY-MM-DD HH:NN:SS',
           categoryField: 'ts',
           categoryAxis: {
-            minPeriod: 'ss',
+            minPeriod: '10ss',
             parseDates: true,
             minorGridAlpha: 0.1,
             minorGridEnabled: true,
@@ -126,7 +126,9 @@
         }
       }
 
-      var url = mptUIConfig.apiUrl + "/" + key + '/throughput/_search';
+      var maxSize = (duration * 60) / 10
+      var url = mptUIConfig.apiUrl + "/" + key + '/throughput/_search?size=' + maxSize;
+      // var url = mptUIConfig.apiUrl + "/" + key + '/throughput/_search?size=30';
 
 
       /*
@@ -152,7 +154,7 @@
             },\
             { \
               \"term\" : { \
-                \"direction\": \"receiver\" \
+                \"direction\": \"" + direction + "\" \
               }\
             },\
             { \"range\" : { \
@@ -166,17 +168,16 @@
         }\
       }\
     }\
-  }\
+  }, \"sort\" : [ {\"ts\" : {\"order\" : \"asc\"}} ]\
 }"
 
-      console.log("Sending request to " + url)
-      console.log("Request data " + requestData)
+      // console.log("Sending request to " + url)
+      // console.log("Request data " + requestData)
       $http.post(url,requestData).then(function(response) {
             var reply = response.data.hits.hits;
             var ret = new Array();
 
             for (var idx in reply) {
-              console.log("Rate: " + reply[idx]._source.rate);
               ret[idx] = { "ts": reply[idx]._source.ts, "rate": reply[idx]._source.rate } ;
             }
 
@@ -186,7 +187,8 @@
             if (response.status == 404) {
               alert('Did not find any results for : ' + sut)
             } else {
-              alert('Unable to contact server: ' + response.status)
+              alert('Unsuccessfull server response. Error code: '
+              +  response.status)
             }
 
         });
@@ -194,27 +196,35 @@
 
 
 
-    $scope.tpInitThroughput = function(key, test_id, version, date, start_time, duration) {
+    $scope.tpInitThroughput = function(key, test_id, version, date, start_time, duration, direction) {
         console.log("Initializing ...")
         $scope.$watch('selected.active.test && selected.active.sut && selected.active.duration && selected.active.start_time', function() {
 
-          console.log("Redrawing throughput graph for " + key + " " + date + "/" + start_time + " - " + duration)
+          console.log("Initialization -> Redrawing throughput graph for " + key + " " + date + "/" + start_time + " - " + duration)
 
-          $scope.updateThroughputChart(key, test_id, version, date, start_time, duration)
+          $scope.updateThroughputChart(key, test_id, version, date, start_time,
+              duration, direction)
         });
 
         $scope.$watch('selected.active.start_time', function() {
 
-          console.log("Redrawing throughput graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
+          console.log("Start time -> changed ->  Redrawing throughput graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
 
-          $scope.updateThroughputChart(key, test_id, version, date, $scope.selected.active.start_time.value, $scope.selected.active.duration.value)
+          $scope.updateThroughputChart(key, test_id, version, date,
+            $scope.selected.active.start_time.value,
+            $scope.selected.active.duration.value,
+            direction)
         });
 
         $scope.$watch('selected.active.duration', function() {
 
-          console.log("Redrawing throughput graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
+          console.log("Duration changed -> Redrawing throughput graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
 
-          $scope.updateThroughputChart(key, test_id, version, date, $scope.selected.active.start_time.value, $scope.selected.active.duration.value)
+          $scope.updateThroughputChart(key, test_id, version, date,
+            $scope.selected.active.start_time.value,
+            $scope.selected.active.duration.value,
+            direction
+          )
         });
     }
 
