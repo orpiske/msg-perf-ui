@@ -2,8 +2,8 @@
 
   <div ng-controller="SutCtrl">
 
-    <div class="form-group" ng-if="loaded.suts" ng-controller="ViewerCtrl">
-      <div>
+    <div ng-if="loaded.suts" ng-controller="ViewerCtrl">
+      <div class="form-group" >
         <label for="queryForm">Receiver:</label>
         <form name="queryForm">
           <!-- TODO Defaults to [3] because I am using 0 to have an error result -->
@@ -41,7 +41,7 @@
           <div class="row">
             <div
                 ba-panel
-                ba-panel-title="Broker ThroughPerformance for {{ selected.active.sut.sut }} {{ selected.active.sut.version }}: {{ selected.active.test.test_id }}"
+                ba-panel-title="Broker Throughput Performance for {{ selected.active.sut.sut }} {{ selected.active.sut.version }}: {{ selected.active.test.test_id }}"
                 ba-panel-class="with-scroll">
                   <div id="lineChart" class="admin-chart"
                     ng-controller="ThroughputCtrl"
