@@ -39,8 +39,8 @@
       this.mptUIConfig = mptUIConfig;
     }
 
-    function DoChart(key, test_id, version) {
-      
+    function DoChart(key, test_id, version, date, duration) {
+
 
       function DrawChart(throughput) {
         var layoutColors = baConfig.colors;
@@ -129,10 +129,60 @@
       var url = mptUIConfig.apiUrl + "/" + key + '/latency/_search?size=0&version=' + version;
 
 
+
+      /*
+       * This is ugly. I know and I agree. I will fix this later, after
+       * I learn how to do this the correct way in this hideous
+       * language
+       */
+      var requestData = "{\
+  \"query\" : {\
+    \"constant_score\" : { \
+      \"filter\" : {\
+        \"bool\" : {\
+          \"must\" : [ \
+            { \
+              \"term\" : { \
+                \"test_id\": \"" + test_id + "\" \
+              } \
+            },\
+            { \
+              \"term\" : { \
+                \"version\": \"" + version + "\" \
+              }\
+            },\
+            { \
+              \"term\" : { \
+                \"direction\": \"receiver\" \
+              }\
+            },\
+            { \"range\" : { \
+                \"creation\" : {\
+                  \"gt\" : \"" + date + ".000\",\
+                  \"lt\" : \"" + date + ".000||+" + duration + "m\" \
+                } \
+              }\
+            }\
+          ]\
+        }\
+      }\
+    }\
+  },\
+  \"aggs\" : { \
+        \"throughput\" : { \
+            \"date_histogram\" : { \
+                \"field\" : \"creation\", \
+                \"interval\" : \"1s\" \
+            } \
+        } \
+    } \
+}"
+
+      console.log("Request: " + requestData)
+
+      // "{\"aggs\" : {\"throughput\" : {\"date_histogram\" : {\"field\" : \"creation\", \"interval\" : \"1s\" } } } }"
       console.log("Sending request to " + url)
-      $http.post(url,
-          "{\"aggs\" : {\"throughput\" : {\"date_histogram\" : {\"field\" : \"creation\", \"interval\" : \"1s\" } } } }"
-        ).then(function(response) {
+      $http.post(url,requestData).then(function(response) {
             var throughput=response.data.aggregations.throughput.buckets
             DrawChart(throughput)
         }, function(response) {
@@ -147,14 +197,14 @@
 
 
 
-    $scope.tpInitFunction = function(key, test_id, version) {
+    $scope.tpInitFunction = function(key, test_id, version, date, duration) {
         console.log("Initializing ...")
         $scope.$watch('selected.active.test && selected.active.sut', function() {
 
-          console.log("Redrawing graph for " + key)
+          console.log("Redrawing graph for " + key + " " + date + " - " + duration)
 
-            $scope.updateChart(key, test_id, version)
-            });
+          $scope.updateChart(key, test_id, version, date, duration)
+        });
     }
 
     $scope.updateChart = DoChart;

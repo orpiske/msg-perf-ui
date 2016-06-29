@@ -12,10 +12,11 @@
     };
 
     $scope.durations = [
-        { label: "1h", value: 1},
-        { label: "2h", value: 2},
-        { label: "3h", value: 3},
-        { label: "4h", value: 4},
+        { label: "30m", value: 30},
+        { label: "1h", value: 60},
+        { label: "2h", value: 120},
+        { label: "3h", value: 180},
+        { label: "4h", value: 240},
       ];
 
     console.log("Initializing viewer")

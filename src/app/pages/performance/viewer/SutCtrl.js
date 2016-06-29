@@ -17,6 +17,7 @@
     $scope.active = {
       test: null,
       sut: null,
+      duration: null,
     };
 
     var suts;

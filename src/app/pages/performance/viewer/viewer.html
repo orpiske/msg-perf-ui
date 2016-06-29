@@ -26,9 +26,8 @@
 
           <div class="col-md-4" ng-if="loaded.suts && loaded.tests">
             <select class="form-control durationpicker" selectpicker title="Duration"
-                ng-model="durationpicker"
-                ng-init="duration = durations[0]"
-
+                ng-init="selected.active.duration = durations[0]"
+                ng-model="selected.active.duration"
                 ng-options="duration as duration.label for duration in durations">
               </select>
             </div>
@@ -45,7 +44,7 @@
                 ba-panel-class="with-scroll">
                   <div id="lineChart" class="admin-chart"
                     ng-controller="ThroughputCtrl"
-                    ng-init="tpInitFunction(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version )"
+                    ng-init="tpInitFunction(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.duration.value )"
                   />
               </div>
             </div>
