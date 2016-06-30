@@ -34,8 +34,8 @@
         fixedHref: 'auth.html',
         blank: true
       }, {
-        title: 'Sign Up',
-        fixedHref: 'reg.html',
+        title: 'About',
+        fixedHref: 'about.html',
         blank: true
       }, {
         title: 'User Profile',
