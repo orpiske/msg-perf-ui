@@ -28,6 +28,69 @@
       range: null,
     };
 
+    $scope.percentiles = {
+        v1 : {
+          label: "100ms",
+          value: null,
+        },
+        v2 : {
+          label: "500ms",
+          value: null,
+        },
+        v3 : {
+          label: "900ms",
+          value: null,
+        },
+        v4 : {
+          label: "1000ms",
+          value: null,
+        },
+        v5 : {
+          label: "1250ms",
+          value: null,
+        },
+        v6 : {
+          label: "1500ms",
+          value: null,
+        },
+        v7 : {
+          label: "1750ms",
+          value: null,
+        },
+        v8 : {
+          label: "2000ms",
+          value: null,
+        },
+        v9 : {
+          label: "3000ms",
+          value: null,
+        },
+        v10 : {
+          label: "5000ms",
+          value: null,
+        },
+        v11 : {
+          label: "10000ms",
+          value: null,
+        },
+        v12 : {
+          label: "15000ms",
+          value: null,
+        },
+        v13 : {
+          label: "20000ms",
+          value: null,
+        },
+        v14 : {
+          label: "30000ms",
+          value: null,
+        },
+        v15 : {
+          label: "60000ms", 
+          value: null,
+        },
+    }
+
     var suts;
     var http;
     var mptUIConfig;
