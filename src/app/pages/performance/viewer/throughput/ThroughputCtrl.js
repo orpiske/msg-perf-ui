@@ -42,7 +42,24 @@
     function DoChart(key, test_id, version, date, start_time, duration, direction) {
 
 
-      function DrawChart(throughput) {
+      function DrawChart(throughput, direction) {
+        if (throughput.length == 0) {
+          if (direction === "receiver") {
+              $scope.plotted.rthroughput = false;
+          }
+          else {
+              $scope.plotted.sthroughput = false;
+          }
+        }
+        else {
+          if (direction === "receiver") {
+              $scope.plotted.rthroughput = true;
+          }
+          else {
+              $scope.plotted.sthroughput = true;
+          }
+        }
+
         var layoutColors = baConfig.colors;
         var id = $element[0].getAttribute('id');
 
@@ -182,7 +199,7 @@
             }
 
 
-            DrawChart(ret)
+            DrawChart(ret, direction)
         }, function(response) {
             if (response.status == 404) {
               alert('Did not find any results for : ' + sut)

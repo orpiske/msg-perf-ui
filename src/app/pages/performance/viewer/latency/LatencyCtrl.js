@@ -42,7 +42,14 @@
     function DoChart(key, test_id, version, date, start_time, duration) {
 
 
-      function DrawChart(throughput) {
+      function DrawChart(latency) {
+        if (latency.length == 0) {
+          $scope.plotted.rlatency = false;
+        }
+        else {
+          $scope.plotted.rlatency = true;
+        }
+
         var layoutColors = baConfig.colors;
         var id = $element[0].getAttribute('id');
 
@@ -54,7 +61,7 @@
           color: layoutColors.defaultText,
           marginTop: 0,
           marginRight: 15,
-          dataProvider: throughput,
+          dataProvider: latency,
           valueAxes: [
             {
               axisAlpha: 0,
@@ -169,7 +176,7 @@
     }\
   },\
   \"aggs\" : { \
-        \"throughput\" : { \
+        \"latency\" : { \
             \"date_histogram\" : { \
                 \"field\" : \"creation\", \
                 \"interval\" : \"1s\" \
@@ -180,8 +187,8 @@
 
       console.log("Sending request to " + url)
       $http.post(url,requestData).then(function(response) {
-            var throughput=response.data.aggregations.throughput.buckets
-            DrawChart(throughput)
+            var latency=response.data.aggregations.latency.buckets
+            DrawChart(latency)
         }, function(response) {
             if (response.status == 404) {
               alert('Did not find any results for : ' + sut)

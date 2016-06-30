@@ -14,6 +14,12 @@
       tests: false,
     };
 
+    $scope.plotted = {
+      sthroughput: false,
+      rthroughput: false,
+      rlatency: false,
+    }
+
     $scope.active = {
       test: null,
       sut: null,

@@ -6,7 +6,6 @@
       <div class="form-group" >
         <label for="queryForm">Please select the appropriate test data:</label>
         <form name="queryForm">
-          <!-- TODO Defaults to [3] because I am using 0 to have an error result -->
           <div class="col-md-4">
             <select class="form-control" title="Please select a SUT" selectpicker
               ng-init="selected.active.sut = suts[0]"
@@ -52,49 +51,66 @@
           </div>
         </div>
 
-        <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)">
+        <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-show="plotted.rthroughput">
           <div class="row">
             <div
-                ba-panel
-                ba-panel-title="Broker Throughput Performance for {{ selected.active.sut.sut }} {{ selected.active.sut.version }}: {{ selected.active.test.test_id }}"
-                ba-panel-class="with-scroll">
-                  <div id="throughputChart" class="admin-chart"
-                    ng-controller="ThroughputCtrl"
-                    ng-init="tpInitThroughput(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value, 'receiver')"
-                  />
-              </div>
-            </div>
-          </div>
-
-
-          <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)">
-            <div class="row">
-              <div
-                  ba-panel
-                  ba-panel-title="Broker Latency Performance for {{ selected.active.sut.sut }} {{ selected.active.sut.version }}: {{ selected.active.test.test_id }}"
-                  ba-panel-class="with-scroll">
-                    <div id="latencyChart" class="admin-chart"
-                      ng-controller="LatencyCtrl"
-                      ng-init="tpInitLatency(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value)"
-                    />
-              </div>
+              ba-panel
+              ba-panel-title="Broker Receiver Throughput Performance for {{ selected.active.sut.sut }} {{ selected.active.sut.version }}: {{ selected.active.test.test_id }}"
+              ba-panel-class="with-scroll">
+                <div id="throughputChart" class="admin-chart"
+                  ng-controller="ThroughputCtrl"
+                  ng-init="tpInitThroughput(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value, 'receiver')">
+                </div>
             </div>
           </div>
         </div>
+        <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-hide="plotted.rthroughput">
+          <div class="alert bg-danger">
+            There are no receiver throughput records for the selected
+            <strong>{{ selected.active.sut.sut }} {{ selected.active.sut.version }}</strong>
+            test combination and/or range. Please selected another one.
+          </div>
+        </div>
 
-
-        <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)">
+        <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-show="plotted.rlatency">
           <div class="row">
             <div
-                ba-panel
-                ba-panel-title="Broker Sender Throughput Performance for {{ selected.active.sut.sut }} {{ selected.active.sut.version }}: {{ selected.active.test.test_id }}"
-                ba-panel-class="with-scroll">
-                  <div id="senderThroughputChart" class="admin-chart"
-                    ng-controller="ThroughputCtrl"
-                    ng-init="tpInitThroughput(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value, 'sender')"
-                  />
-              </div>
+              ba-panel
+              ba-panel-title="Broker Receiver Latency Performance for {{ selected.active.sut.sut }} {{ selected.active.sut.version }}: {{ selected.active.test.test_id }}"
+              ba-panel-class="with-scroll">
+                <div id="latencyChart" class="admin-chart"
+                  ng-controller="LatencyCtrl"
+                  ng-init="tpInitLatency(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value)">
+                </div>
             </div>
+          </div>
+        </div>
+        <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-hide="plotted.rlatency">
+          <div class="alert bg-danger">
+            There are no receiver latency records for the selected
+            <strong>{{ selected.active.sut.sut }} {{ selected.active.sut.version }}</strong>
+            test combination and/or range. Please selected another one.
+          </div>
+        </div>
+
+        <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-show="plotted.sthroughput">
+          <div class="row">
+            <div
+              ba-panel
+              ba-panel-title="Broker Sender Throughput Performance for {{ selected.active.sut.sut }} {{ selected.active.sut.version }}: {{ selected.active.test.test_id }}"
+              ba-panel-class="with-scroll">
+                <div id="senderThroughputChart" class="admin-chart"
+                  ng-controller="ThroughputCtrl"
+                  ng-init="tpInitThroughput(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value, 'sender')">
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-hide="plotted.sthroughput">
+          <div class="alert bg-danger">
+            There are no sender throughput records for the selected
+            <strong>{{ selected.active.sut.sut }} {{ selected.active.sut.version }}</strong>
+            test combination and/or range. Please selected another one.
           </div>
         </div>
       </div>
