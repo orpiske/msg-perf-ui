@@ -68,6 +68,7 @@
               position: 'left',
               gridAlpha: 0.5,
               gridColor: layoutColors.border,
+              title: "Latency",
             }
           ],
           graphs: [
@@ -115,6 +116,7 @@
             minorGridEnabled: true,
             gridAlpha: 0.5,
             gridColor: layoutColors.border,
+            title: "Time",
           },
           export: {
             enabled: true

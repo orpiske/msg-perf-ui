@@ -78,6 +78,7 @@
               position: 'left',
               gridAlpha: 0.5,
               gridColor: layoutColors.border,
+              title: "Messages per second",
             }
           ],
           graphs: [
@@ -125,6 +126,7 @@
             minorGridEnabled: true,
             gridAlpha: 0.5,
             gridColor: layoutColors.border,
+            title: "Time",
           },
           export: {
             enabled: true
