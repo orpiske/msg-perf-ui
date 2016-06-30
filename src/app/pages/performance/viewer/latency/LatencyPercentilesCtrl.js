@@ -62,24 +62,49 @@
         $http.post(url,requestData).then(function(response) {
             var percentiles=response.data.aggregations.latency_percentiles.values;
 
-            console.log("Got the following percentiles: " + percentiles["100.0"])
-            console.log("Got the following percentiles: " + percentiles["1250.0"])
+            if (percentiles["100.0"] === "NaN") {
+              console.log("There's not percentiles for this set")
+              $scope.loaded.percentiles = false;
 
-            $scope.percentiles.v1.value = percentiles["100.0"];
-            $scope.percentiles.v2.value = percentiles["500.0"];
-            $scope.percentiles.v3.value = percentiles["900.0"];
-            $scope.percentiles.v4.value = percentiles["1000.0"];
-            $scope.percentiles.v5.value = percentiles["1250.0"];
-            $scope.percentiles.v6.value = percentiles["1500.0"];
-            $scope.percentiles.v7.value = percentiles["1750.0"];
-            $scope.percentiles.v8.value = percentiles["2000.0"];
-            $scope.percentiles.v9.value = percentiles["3000.0"];
-            $scope.percentiles.v10.value = percentiles["5000.0"];
-            $scope.percentiles.v11.value = percentiles["10000.0"];
-            $scope.percentiles.v12.value = percentiles["15000.0"];
-            $scope.percentiles.v13.value = percentiles["20000.0"];
-            $scope.percentiles.v14.value = percentiles["30000.0"];
-            $scope.percentiles.v15.value = percentiles["60000.0"];
+              $scope.percentiles.v1.value = "";
+              $scope.percentiles.v2.value = "";
+              $scope.percentiles.v3.value = "";
+              $scope.percentiles.v4.value = "";
+              $scope.percentiles.v5.value = "";
+              $scope.percentiles.v6.value = "";
+              $scope.percentiles.v7.value = "";
+              $scope.percentiles.v8.value = "";
+              $scope.percentiles.v9.value = "";
+              $scope.percentiles.v10.value = "";
+              $scope.percentiles.v11.value = "";
+              $scope.percentiles.v12.value = "";
+              $scope.percentiles.v13.value = "";
+              $scope.percentiles.v14.value = "";
+              $scope.percentiles.v15.value = "";
+            }
+            else {
+              $scope.loaded.percentiles = true;
+
+              $scope.percentiles.v1.value = percentiles["100.0"];
+              $scope.percentiles.v2.value = percentiles["500.0"];
+              $scope.percentiles.v3.value = percentiles["900.0"];
+              $scope.percentiles.v4.value = percentiles["1000.0"];
+              $scope.percentiles.v5.value = percentiles["1250.0"];
+              $scope.percentiles.v6.value = percentiles["1500.0"];
+              $scope.percentiles.v7.value = percentiles["1750.0"];
+              $scope.percentiles.v8.value = percentiles["2000.0"];
+              $scope.percentiles.v9.value = percentiles["3000.0"];
+              $scope.percentiles.v10.value = percentiles["5000.0"];
+              $scope.percentiles.v11.value = percentiles["10000.0"];
+              $scope.percentiles.v12.value = percentiles["15000.0"];
+              $scope.percentiles.v13.value = percentiles["20000.0"];
+              $scope.percentiles.v14.value = percentiles["30000.0"];
+              $scope.percentiles.v15.value = percentiles["60000.0"];
+            }
+
+
+
+
           }, function(response) {
             if (response.status == 404) {
               alert('Did not find any results for : ' + sut)

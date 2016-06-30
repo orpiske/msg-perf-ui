@@ -12,6 +12,7 @@
     $scope.loaded = {
       suts: false,
       tests: false,
+      percentiles: false,
     };
 
     $scope.plotted = {
@@ -86,7 +87,7 @@
           value: null,
         },
         v15 : {
-          label: "60000ms", 
+          label: "60000ms",
           value: null,
         },
     }
