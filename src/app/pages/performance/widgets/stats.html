@@ -1,0 +1,37 @@
+<div class="horizontal-scroll">
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="align-right">SUT</th>
+      <th class="align-right">Version</th>
+      <th class="align-right">Operating System</th>
+      <th class="align-right">Protocol</th>
+      <th class="align-right">Client System Information</th>
+      <th class="align-right">Broker System Information</th>
+      <th class="align-right">Test Comments</th>
+      <th class="align-right">Test Result Comments</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td ng-class="nowrap">{{ selected.active.sut.sut }}</td>
+        <td class="align-right">{{ selected.active.sut.version }}</td>
+        <td class="align-right">{{ selected.active.test.os_name }} - {{ selected.active.test.os_version }}</td>
+        <td class="align-right">{{ selected.active.test.protocol }}</td>
+        <td class="align-right">{{ selected.active.test.producer_sysinfo }}</td>
+        <td class="align-right">{{ selected.active.test.broker_sysinfo }}</td>
+        <td class="align-right">{{ selected.active.test.comment }}</td>
+        <td class="align-right">{{ selected.active.test.result_comment }}</td>
+      </tr>
+      <!--
+    <tr ng-repeat="item in metricsTableData">
+      <td><img ng-src="{{::( item.image | appImage )}}" width="20" height="20"></td>
+      <td ng-class="nowrap">{{item.browser}}</td>
+      <td class="align-right">{{item.visits}}</td>
+      <td class="align-right">{{item.purchases}}</td>
+      <td class="align-right">{{item.percent}}</td>
+    </tr>
+  -->
+    </tbody>
+  </table>
+</div>
