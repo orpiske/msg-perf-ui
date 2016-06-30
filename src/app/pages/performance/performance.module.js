@@ -6,9 +6,9 @@
   'use strict';
 
   angular.module('BlurAdmin.pages.performance', [
-    'BlurAdmin.pages.performance.comparison',
+    // 'BlurAdmin.pages.performance.comparison',
     'BlurAdmin.pages.performance.viewer',
-    'BlurAdmin.pages.performance.stats'
+    // 'BlurAdmin.pages.performance.stats'
   ])
       .config(routeConfig);
 
