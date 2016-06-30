@@ -4,9 +4,9 @@
 
     <div ng-if="loaded.suts" ng-controller="ViewerCtrl">
       <div class="form-group" >
-        <label for="queryForm">Please select the appropriate test data:</label>
         <form name="queryForm">
           <div class="col-md-4">
+            <p>Please select the Software Under Test (SUT):</p>
             <select class="form-control" title="Please select a SUT" selectpicker
               ng-init="selected.active.sut = suts[0]"
               ng-model="selected.active.sut"
@@ -15,7 +15,9 @@
               />
           </div>
 
+
           <div class="col-md-4" ng-if="loaded.suts && loaded.tests">
+            <p>Test execution:</p>
             <select class="form-control selectpicker" title="Please select a test" selectpicker
               ng-init="selected.active.test = testInfo[0]"
               ng-model="selected.active.test"
@@ -24,6 +26,7 @@
           </div>
 
           <div class="col-md-1" ng-if="loaded.suts && loaded.tests">
+              <p>Point in Time:</p>
               <select class="form-control durationpicker" selectpicker title="Start Time"
                 ng-init="selected.active.start_time = start_times[0]"
                 ng-model="selected.active.start_time"
@@ -33,6 +36,7 @@
           </div>
 
           <div class="col-md-1" ng-if="loaded.suts && loaded.tests">
+              <p>Duration:</p>
               <select class="form-control durationpicker" selectpicker title="Duration"
                 ng-init="selected.active.duration = durations[0]"
                 ng-model="selected.active.duration"
@@ -52,7 +56,7 @@
         </div>
 
         <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-show="loaded.percentiles">
-          <div ba-panel ba-panel-title="Test Execution Statistics" ba-panel-class="with-scroll table-panel">
+          <div ba-panel ba-panel-title="Test Execution Statistics: Latency Percentiles" ba-panel-class="with-scroll table-panel">
             <div ng-controller="LatencyPercentilesCtrl"
               ng-init="tpInitPercentiles(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version)"
               include-with-scope="app/pages/performance/widgets/percentiles.html"></div>
