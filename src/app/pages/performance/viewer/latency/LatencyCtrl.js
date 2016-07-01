@@ -68,7 +68,7 @@
               position: 'left',
               gridAlpha: 0.5,
               gridColor: layoutColors.border,
-              title: "Latency",
+              title: "Average Latency (in milliseconds)",
             }
           ],
           graphs: [
@@ -81,7 +81,7 @@
               lineThickness: 1,
               negativeLineColor: layoutColors.warning,
               type: 'smoothedLine',
-              valueField: 'doc_count'
+              valueField: 'avg_latency'
             }
           ],
           chartScrollbar: {
@@ -182,15 +182,36 @@
             \"date_histogram\" : { \
                 \"field\" : \"creation\", \
                 \"interval\" : \"1s\" \
-            } \
+            },\
+            \"aggs\" : {\
+                \"avg_latency\" : { \
+                    \"avg\" : { \
+                        \"field\" : \"latency\" \
+                      } \
+                    }\
+              } \
         } \
     } \
 }"
 
       console.log("Sending request to " + url)
       $http.post(url,requestData).then(function(response) {
-            var latency=response.data.aggregations.latency.buckets
-            DrawChart(latency)
+            var reply=response.data.aggregations.latency.buckets
+            var latencyData = new Array();
+
+            /**
+             * We have to transform the reply, because amCharts cannot access
+             * the inner avg_latency.value
+             */
+            for (var idx in reply) {
+              latencyData[idx] = {
+                "key_as_string": reply[idx].key_as_string,
+                "doc_count": reply[idx].doc_count,
+                "avg_latency": reply[idx].avg_latency.value,
+               } ;
+            }
+
+            DrawChart(latencyData)
         }, function(response) {
             if (response.status == 404) {
               alert('Did not find any results for : ' + sut)
