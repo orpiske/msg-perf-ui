@@ -1,0 +1,26 @@
+<div class="horizontal-scroll">
+
+  
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th class="align-right">Broker System Information</th>
+      <th class="align-right">Broker Hardware Type</th>
+      <th class="align-right">Broker OS</th>
+      <th class="align-right">Broker OS Version</th>
+      <th class="align-right">Consumer System Information</th>
+      <th class="align-right">Producer System Information</th>
+    </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="align-right">{{ selected.active.test.broker_sysinfo }}</td>
+        <td class="align-right">{{ selected.active.test.broker_hw_type }}</td>
+        <td class="align-right">{{ selected.active.test.broker_os_name }} - {{ selected.active.test.broker_os_type }}</td>
+        <td class="align-right">{{ selected.active.test.broker_os_version }}</td>
+        <td class="align-right">{{ selected.active.test.consumer_sysinfo }}</td>
+        <td class="align-right">{{ selected.active.test.producer_sysinfo }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

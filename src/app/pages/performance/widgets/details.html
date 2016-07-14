@@ -6,10 +6,14 @@
       <th class="align-right">Version</th>
       <th class="align-right">Operating System</th>
       <th class="align-right">Protocol</th>
-      <th class="align-right">Client System Information</th>
-      <th class="align-right">Broker System Information</th>
-      <th class="align-right">Test Comments</th>
-      <th class="align-right">Test Result Comments</th>
+      <th class="align-right">Endpoint Type</th>
+      <th class="align-right">Message Size</th>
+      <th class="align-right">Consumer Count</th>
+      <th class="align-right">Producer Count</th>
+      <th class="align-right">Start Time</th>
+      <th class="align-right">Duration</th>
+      <th class="align-right">Comments</th>
+      <th class="align-right">Result Comments</th>
     </tr>
     </thead>
     <tbody>
@@ -18,8 +22,12 @@
         <td class="align-right">{{ selected.active.sut.sut_version }}</td>
         <td class="align-right">{{ selected.active.test.broker_os_name }} - {{ selected.active.test.broker_os_version }}</td>
         <td class="align-right">{{ selected.active.test.msg_protocol }}</td>
-        <td class="align-right">{{ selected.active.test.producer_sysinfo }}</td>
-        <td class="align-right">{{ selected.active.test.broker_sysinfo }}</td>
+        <td class="align-right">{{ selected.active.test.msg_endpoint_type }}</td>
+        <td class="align-right">{{ selected.active.test.msg_size }}</td>
+        <td class="align-right">{{ selected.active.test.consumer_count }}</td>
+        <td class="align-right">{{ selected.active.test.producer_count }}</td>
+        <td class="align-right">{{ selected.active.test.test_start_time }}</td>
+        <td class="align-right">{{ selected.active.test.test_duration }}</td>
         <td class="align-right">{{ selected.active.test.test_comment }}</td>
         <td class="align-right">{{ selected.active.test.test_result_comment }}</td>
       </tr>
