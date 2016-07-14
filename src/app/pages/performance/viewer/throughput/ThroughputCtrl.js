@@ -168,12 +168,12 @@
             },\
             { \
               \"term\" : { \
-                \"version\": \"" + version + "\" \
+                \"sut_version\": \"" + version + "\" \
               }\
             },\
             { \
               \"term\" : { \
-                \"direction\": \"" + direction + "\" \
+                \"test_direction\": \"" + direction + "\" \
               }\
             },\
             { \"range\" : { \

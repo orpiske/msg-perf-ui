@@ -35,12 +35,12 @@
                     },\
                     { \
                       \"term\" : { \
-                        \"version\": \"" + version + "\" \
+                        \"sut_version\": \"" + version + "\" \
                       }\
                     },\
                     { \
                       \"term\" : { \
-                        \"direction\": \"receiver\" \
+                        \"test_direction\": \"receiver\" \
                       }\
                     }\
                   ]\

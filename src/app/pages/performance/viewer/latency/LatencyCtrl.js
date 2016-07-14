@@ -135,7 +135,7 @@
         }
       }
 
-      var url = mptUIConfig.apiUrl + "/" + key + '/latency/_search?size=0&version=' + version;
+      var url = mptUIConfig.apiUrl + "/" + key + '/latency/_search?size=0&sut_version=' + version;
 
 
 
@@ -157,12 +157,12 @@
             },\
             { \
               \"term\" : { \
-                \"version\": \"" + version + "\" \
+                \"sut_version\": \"" + version + "\" \
               }\
             },\
             { \
               \"term\" : { \
-                \"direction\": \"receiver\" \
+                \"test_direction\": \"receiver\" \
               }\
             },\
             { \"range\" : { \

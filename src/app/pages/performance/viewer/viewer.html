@@ -10,8 +10,8 @@
             <select class="form-control" title="Please select a SUT" selectpicker
               ng-init="selected.active.sut = suts[0]"
               ng-model="selected.active.sut"
-              ng-options='sut as (sut.sut + " (" + sut.version + ")") group by sut.sut for sut in suts'
-              ng-change="loadTests(selected.active.sut.key)"
+              ng-options='sut as (sut.sut_name + " (" + sut.sut_version + ")") group by sut.sut_name for sut in suts'
+              ng-change="loadTests(selected.active.sut.sut_key)"
               />
           </div>
 
@@ -21,7 +21,7 @@
             <select class="form-control selectpicker" title="Please select a test" selectpicker
               ng-init="selected.active.test = testInfo[0]"
               ng-model="selected.active.test"
-              ng-options='test as (test.test_id + " (" + test.os_name + "-" + test.os_version + " " + test.protocol + " " + test.start_time + ")") for test in testInfo'
+              ng-options='test as (test.test_id + " (" + test.broker_os_name + "-" + test.broker_os_version + " " + test.msg_protocol + " " + test.test_start_time + ")") for test in testInfo'
             />
           </div>
 
@@ -58,13 +58,13 @@
         <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-show="loaded.percentiles">
           <div ba-panel ba-panel-title="Test Execution Statistics: Latency Percentiles" ba-panel-class="with-scroll table-panel">
             <div ng-controller="LatencyPercentilesCtrl"
-              ng-init="tpInitPercentiles(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version)"
+              ng-init="tpInitPercentiles(selected.active.sut.sut_key, selected.active.test.test_id, selected.active.sut.sut_version)"
               include-with-scope="app/pages/performance/widgets/percentiles.html"></div>
           </div>
         </div>
         <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-hide="loaded.percentiles">
           <div class="alert bg-danger">
-            There are no percentile data for <strong>{{ selected.active.sut.sut }} {{ selected.active.sut.version }}</strong>
+            There are no percentile data for <strong>{{ selected.active.sut.sut_name }} {{ selected.active.sut.sut_version }}</strong>
             tests. Please selected another one.
           </div>
         </div>
@@ -73,11 +73,11 @@
           <div class="row">
             <div
               ba-panel
-              ba-panel-title="Broker Receiver Throughput Performance for {{ selected.active.sut.sut }} {{ selected.active.sut.version }}: {{ selected.active.test.test_id }}"
+              ba-panel-title="Broker Receiver Throughput Performance for {{ selected.active.sut.sut_name }} {{ selected.active.sut.sut_version }}: {{ selected.active.test.test_id }}"
               ba-panel-class="with-scroll">
                 <div id="throughputChart" class="admin-chart"
                   ng-controller="ThroughputCtrl"
-                  ng-init="tpInitThroughput(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value, 'receiver')">
+                  ng-init="tpInitThroughput(selected.active.sut.sut_key, selected.active.test.test_id, selected.active.sut.sut_version, selected.active.test.test_start_time, selected.active.start_time.value, selected.active.duration.value, 'receiver')">
                 </div>
             </div>
           </div>
@@ -85,7 +85,7 @@
         <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-hide="plotted.rthroughput">
           <div class="alert bg-danger">
             There are no receiver throughput records for the selected
-            <strong>{{ selected.active.sut.sut }} {{ selected.active.sut.version }}</strong>
+            <strong>{{ selected.active.sut.sut_name }} {{ selected.active.sut.sut_version }}</strong>
             test combination and/or range. Please selected another one.
           </div>
         </div>
@@ -94,11 +94,11 @@
           <div class="row">
             <div
               ba-panel
-              ba-panel-title="Broker Receiver Latency Performance for {{ selected.active.sut.sut }} {{ selected.active.sut.version }}: {{ selected.active.test.test_id }}"
+              ba-panel-title="Broker Receiver Latency Performance for {{ selected.active.sut.sut }} {{ selected.active.sut.sut_version }}: {{ selected.active.test.test_id }}"
               ba-panel-class="with-scroll">
                 <div id="latencyChart" class="admin-chart"
                   ng-controller="LatencyCtrl"
-                  ng-init="tpInitLatency(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value)">
+                  ng-init="tpInitLatency(selected.active.sut.sut_key, selected.active.test.test_id, selected.active.sut.sut_version, selected.active.test.test_start_time, selected.active.start_time.value, selected.active.duration.value)">
                 </div>
             </div>
           </div>
@@ -106,7 +106,7 @@
         <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-hide="plotted.rlatency">
           <div class="alert bg-danger">
             There are no receiver latency records for the selected
-            <strong>{{ selected.active.sut.sut }} {{ selected.active.sut.version }}</strong>
+            <strong>{{ selected.active.sut.sut_name }} {{ selected.active.sut.sut_version }}</strong>
             test combination and/or range. Please selected another one.
           </div>
         </div>
@@ -115,11 +115,11 @@
           <div class="row">
             <div
               ba-panel
-              ba-panel-title="Broker Sender Throughput Performance for {{ selected.active.sut.sut }} {{ selected.active.sut.version }}: {{ selected.active.test.test_id }}"
+              ba-panel-title="Broker Sender Throughput Performance for {{ selected.active.sut.sut_name }} {{ selected.active.sut.sut_version }}: {{ selected.active.test.test_id }}"
               ba-panel-class="with-scroll">
                 <div id="senderThroughputChart" class="admin-chart"
                   ng-controller="ThroughputCtrl"
-                  ng-init="tpInitThroughput(selected.active.sut.key, selected.active.test.test_id, selected.active.sut.version, selected.active.test.start_time, selected.active.start_time.value, selected.active.duration.value, 'sender')">
+                  ng-init="tpInitThroughput(selected.active.sut.sut_key, selected.active.test.test_id, selected.active.sut.sut_version, selected.active.test.test_start_time, selected.active.start_time.value, selected.active.duration.value, 'sender')">
                 </div>
             </div>
           </div>
@@ -127,7 +127,7 @@
         <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-hide="plotted.sthroughput">
           <div class="alert bg-danger">
             There are no sender throughput records for the selected
-            <strong>{{ selected.active.sut.sut }} {{ selected.active.sut.version }}</strong>
+            <strong>{{ selected.active.sut.sut_name }} {{ selected.active.sut.sut_version }}</strong>
             test combination and/or range. Please selected another one.
           </div>
         </div>

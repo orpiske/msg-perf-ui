@@ -14,14 +14,14 @@
     </thead>
     <tbody>
       <tr>
-        <td ng-class="nowrap">{{ selected.active.sut.sut }}</td>
-        <td class="align-right">{{ selected.active.sut.version }}</td>
-        <td class="align-right">{{ selected.active.test.os_name }} - {{ selected.active.test.os_version }}</td>
-        <td class="align-right">{{ selected.active.test.protocol }}</td>
+        <td ng-class="nowrap">{{ selected.active.sut.sut_name }}</td>
+        <td class="align-right">{{ selected.active.sut.sut_version }}</td>
+        <td class="align-right">{{ selected.active.test.broker_os_name }} - {{ selected.active.test.broker_os_version }}</td>
+        <td class="align-right">{{ selected.active.test.msg_protocol }}</td>
         <td class="align-right">{{ selected.active.test.producer_sysinfo }}</td>
         <td class="align-right">{{ selected.active.test.broker_sysinfo }}</td>
-        <td class="align-right">{{ selected.active.test.comment }}</td>
-        <td class="align-right">{{ selected.active.test.result_comment }}</td>
+        <td class="align-right">{{ selected.active.test.test_comment }}</td>
+        <td class="align-right">{{ selected.active.test.test_result_comment }}</td>
       </tr>
     </tbody>
   </table>
