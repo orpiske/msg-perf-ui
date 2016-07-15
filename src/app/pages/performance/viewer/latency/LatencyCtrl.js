@@ -226,26 +226,25 @@
 
 
     $scope.tpInitLatency = function(key, test_id, version, date, start_time, duration) {
-        console.log("Initializing ...")
-        $scope.$watch('selected.active.test && selected.active.sut && selected.active.duration && selected.active.start_time', function() {
+        console.log("Initializing latency")
 
-          console.log("Redrawing latency graph for " + key + " " + date + "/" + start_time + " - " + duration)
+        var tpWatchGroup = ['selected.active.sut', 'selected.active.test', 'selected.active.start_time', 'selected.active.duration']
 
-          $scope.updateLatencyChart(key, test_id, version, date, start_time, duration)
-        });
+        $scope.$watchGroup(tpWatchGroup, function() {
 
-        $scope.$watch('selected.active.start_time', function() {
+          console.log("SUT, test, start time or duration changed -> Redrawing latency graph for " +
+              $scope.selected.active.sut.sut_key + " " +
+              $scope.selected.active.test.test_start_time +
+              "/" + $scope.selected.active.start_time.value + " - " +
+              $scope.selected.active.duration.value)
 
-          console.log("Redrawing latency graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
-
-          $scope.updateLatencyChart(key, test_id, version, date, $scope.selected.active.start_time.value, $scope.selected.active.duration.value)
-        });
-
-        $scope.$watch('selected.active.duration', function() {
-
-          console.log("Redrawing latency graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
-
-          $scope.updateLatencyChart(key, test_id, version, date, $scope.selected.active.start_time.value, $scope.selected.active.duration.value)
+          $scope.updateLatencyChart(
+              $scope.selected.active.sut.sut_key,
+              $scope.selected.active.test.test_id,
+              $scope.selected.active.sut.sut_version,
+              $scope.selected.active.test.test_start_time,
+              $scope.selected.active.start_time.value,
+              $scope.selected.active.duration.value)
         });
     }
 
