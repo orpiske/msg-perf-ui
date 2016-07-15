@@ -216,20 +216,54 @@
 
 
     $scope.tpInitThroughput = function(key, test_id, version, date, start_time, duration, direction) {
-        console.log("Initializing ...")
-        $scope.$watch('selected.active.test && selected.active.sut && selected.active.duration && selected.active.start_time', function() {
+        console.log("Initializing throughput")
 
-          console.log("Initialization -> Redrawing throughput graph for " + key + " " + date + "/" + start_time + " - " + duration)
+        $scope.$watch('selected.active.sut', function() {
+          console.log("Active SUT -> changed ->  Redrawing throughput graph for "
+                  + key + " " + $scope.selected.active.test.test_start_time +
+                   "/" + $scope.selected.active.start_time.value
+                   + " - " + $scope.selected.active.duration.value)
 
-          $scope.updateThroughputChart(key, test_id, version, date, start_time,
-              duration, direction)
+          $scope.updateThroughputChart(
+            $scope.selected.active.sut.sut_key,
+            $scope.selected.active.test.test_id,
+            $scope.selected.active.sut.sut_version,
+            $scope.selected.active.test.test_start_time,
+            $scope.selected.active.start_time.value,
+            $scope.selected.active.duration.value,
+            direction)
+        });
+
+        $scope.$watch('selected.active.test', function() {
+
+          console.log("Active test -> changed ->  Redrawing throughput graph for "
+                  + key + " " + $scope.selected.active.test.test_start_time +
+                   "/" + $scope.selected.active.start_time.value
+                   + " - " + $scope.selected.active.duration.value)
+
+          $scope.updateThroughputChart(
+            $scope.selected.active.sut.sut_key,
+            $scope.selected.active.test.test_id,
+            $scope.selected.active.sut.sut_version,
+            $scope.selected.active.test.test_start_time,
+            $scope.selected.active.start_time.value,
+            $scope.selected.active.duration.value,
+            direction)
         });
 
         $scope.$watch('selected.active.start_time', function() {
 
-          console.log("Start time -> changed ->  Redrawing throughput graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
+          console.log("Start time -> changed ->  Redrawing throughput graph for "
+                  + $scope.selected.active.sut.sut_key + " " +
+                   $scope.selected.active.test.test_start_time +
+                   "/" + $scope.selected.active.start_time.value + " - " +
+                   $scope.selected.active.duration.value)
 
-          $scope.updateThroughputChart(key, test_id, version, date,
+          $scope.updateThroughputChart(
+            $scope.selected.active.sut.sut_key,
+            $scope.selected.active.test.test_id,
+            $scope.selected.active.sut.sut_version,
+            $scope.selected.active.test.test_start_time,
             $scope.selected.active.start_time.value,
             $scope.selected.active.duration.value,
             direction)
@@ -237,9 +271,17 @@
 
         $scope.$watch('selected.active.duration', function() {
 
-          console.log("Duration changed -> Redrawing throughput graph for " + key + " " + date + "/" + $scope.selected.active.start_time.value + " - " + $scope.selected.active.duration.value)
+          console.log("Duration changed -> Redrawing throughput graph for " +
+              $scope.selected.active.sut.sut_key + " " +
+              $scope.selected.active.test.test_start_time +
+              "/" + $scope.selected.active.start_time.value + " - " +
+              $scope.selected.active.duration.value)
 
-          $scope.updateThroughputChart(key, test_id, version, date,
+          $scope.updateThroughputChart(
+            $scope.selected.active.sut.sut_key,
+            $scope.selected.active.test.test_id,
+            $scope.selected.active.sut.sut_version,
+            $scope.selected.active.test.test_start_time,
             $scope.selected.active.start_time.value,
             $scope.selected.active.duration.value,
             direction
