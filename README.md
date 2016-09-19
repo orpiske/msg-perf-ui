@@ -41,7 +41,7 @@ work in progress, but overall usage can be summarized like this:
 1 - Register you Software Under Test into the database:
 
 ```
-./mpt-loader.py --register --key "activemq" --sut "ActiveMQ" --version "5.13.3"  --url http://<elastic-db-hostname>:9200/
+./mpt-loader.py --register --sut-key "activemq" --sut-name "ActiveMQ" --sut-version "5.13.3"  --url http://<elastic-db-hostname>:9200/
 ```
 
 
