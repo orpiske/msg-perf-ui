@@ -31,63 +31,63 @@
 
     $scope.percentiles = {
         v1 : {
-          label: "100ms",
+          label: "5ms",
           value: null,
         },
         v2 : {
-          label: "500ms",
+          label: "10ms",
           value: null,
         },
         v3 : {
-          label: "900ms",
+          label: "25ms",
           value: null,
         },
         v4 : {
-          label: "1000ms",
+          label: "50ms",
           value: null,
         },
         v5 : {
-          label: "1250ms",
+          label: "75ms",
           value: null,
         },
         v6 : {
-          label: "1500ms",
+          label: "90ms",
           value: null,
         },
         v7 : {
-          label: "1750ms",
+          label: "100ms",
           value: null,
         },
         v8 : {
-          label: "2000ms",
+          label: "500ms",
           value: null,
         },
         v9 : {
-          label: "3000ms",
+          label: "900ms",
           value: null,
         },
         v10 : {
-          label: "5000ms",
+          label: "1000ms",
           value: null,
         },
         v11 : {
-          label: "10000ms",
+          label: "1500ms",
           value: null,
         },
         v12 : {
-          label: "15000ms",
+          label: "2000ms",
           value: null,
         },
         v13 : {
-          label: "20000ms",
+          label: "3000ms",
           value: null,
         },
         v14 : {
-          label: "30000ms",
+          label: "5000ms",
           value: null,
         },
         v15 : {
-          label: "60000ms",
+          label: "10000ms",
           value: null,
         },
     }
