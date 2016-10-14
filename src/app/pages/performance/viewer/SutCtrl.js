@@ -110,11 +110,12 @@
       console.log("Changed to " + someValue);
     };
 
-    function LoadTests(key) {
+    function LoadTests(key, version) {
         $scope.loaded.tests = false;
-        var url = mptUIConfig.apiUrl + "/test/info/_search?q=sut_key:" + key;
+        var url = mptUIConfig.apiUrl + "/test/info/_search?q=sut_key:" + key +
+            "&q=sut_version:" + version ;
 
-        console.log("Loading the tests for " + key)
+        console.log("Loading the tests for " + key + "version " + version)
 
         $http.get(url).then(function(response) {
             var reply = response.data.hits.hits;
@@ -123,7 +124,8 @@
             // console.log("Done loading tests : " + reply)
             console.log("Number of tests for " + key + ": " + response.data.hits.total)
             for (var idx in reply) {
-                console.log("Test information data: " + reply[idx]._source.test_id)
+                console.log("Test ID: " + reply[idx]._source.test_id)
+                console.log("Test req url: " + reply[idx]._source.test_req_url)
                 ret[idx] = reply[idx]._source;
             }
 
@@ -156,7 +158,7 @@
         }
 
         if (!$scope.loaded.suts) {
-          LoadTests(ret[0].sut_key)
+          LoadTests(ret[0].sut_key, ret[0].sut_version)
         }
 
         $scope.suts = ret;

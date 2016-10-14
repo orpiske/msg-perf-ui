@@ -214,9 +214,9 @@
             DrawChart(latencyData)
         }, function(response) {
             if (response.status == 404) {
-              alert('Did not find any results for : ' + sut)
+              console.log('Did not find any results for : ' + key)
             } else {
-              alert('Unsuccessfull server response. Error code: '
+              console.log('Unsuccessfull server response. Error code: '
                 + response.status)
             }
 
@@ -233,13 +233,13 @@
         $scope.$watchGroup(tpWatchGroup, function() {
 
           console.log("SUT, test, start time or duration changed -> Redrawing latency graph for " +
-              $scope.selected.active.sut.sut_key + " " +
+              $scope.selected.active.test.test_req_url + " " +
               $scope.selected.active.test.test_start_time +
               "/" + $scope.selected.active.start_time.value + " - " +
               $scope.selected.active.duration.value)
 
           $scope.updateLatencyChart(
-              $scope.selected.active.sut.sut_key,
+              $scope.selected.active.test.test_req_url,
               $scope.selected.active.test.test_id,
               $scope.selected.active.sut.sut_version,
               $scope.selected.active.test.test_start_time,

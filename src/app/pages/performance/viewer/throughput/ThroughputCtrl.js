@@ -223,13 +223,13 @@
         $scope.$watchGroup(tpWatchGroup, function() {
 
           console.log("SUT, test, start time or duration changed -> Redrawing throughput graph for " +
-              $scope.selected.active.sut.sut_key + " " +
+              $scope.selected.active.test.test_req_url + " " +
               $scope.selected.active.test.test_start_time +
               "/" + $scope.selected.active.start_time.value + " - " +
               $scope.selected.active.duration.value)
 
           $scope.updateThroughputChart(
-            $scope.selected.active.sut.sut_key,
+            $scope.selected.active.test.test_req_url,
             $scope.selected.active.test.test_id,
             $scope.selected.active.sut.sut_version,
             $scope.selected.active.test.test_start_time,
