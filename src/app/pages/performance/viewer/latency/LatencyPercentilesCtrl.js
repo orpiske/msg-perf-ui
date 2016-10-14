@@ -52,7 +52,7 @@
                 \"latency_percentiles\" : { \
                     \"percentile_ranks\" : { \
                         \"field\" : \"latency\", \
-                        \"values\" : [100, 500, 900, 1000, 1250, 1500, 1750, 2000, 3000, 5000, 10000, 15000, 20000, 30000, 60000] \
+                        \"values\" : [5, 10, 25, 50, 75, 90, 100, 500, 900, 1000, 1500, 2000, 3000, 5000, 10000] \
                     } \
                 } \
             } \
@@ -85,21 +85,21 @@
             else {
               $scope.loaded.percentiles = true;
 
-              $scope.percentiles.v1.value = percentiles["100.0"];
-              $scope.percentiles.v2.value = percentiles["500.0"];
-              $scope.percentiles.v3.value = percentiles["900.0"];
-              $scope.percentiles.v4.value = percentiles["1000.0"];
-              $scope.percentiles.v5.value = percentiles["1250.0"];
-              $scope.percentiles.v6.value = percentiles["1500.0"];
-              $scope.percentiles.v7.value = percentiles["1750.0"];
-              $scope.percentiles.v8.value = percentiles["2000.0"];
-              $scope.percentiles.v9.value = percentiles["3000.0"];
-              $scope.percentiles.v10.value = percentiles["5000.0"];
-              $scope.percentiles.v11.value = percentiles["10000.0"];
-              $scope.percentiles.v12.value = percentiles["15000.0"];
-              $scope.percentiles.v13.value = percentiles["20000.0"];
-              $scope.percentiles.v14.value = percentiles["30000.0"];
-              $scope.percentiles.v15.value = percentiles["60000.0"];
+              $scope.percentiles.v1.value = percentiles["5.0"];
+              $scope.percentiles.v2.value = percentiles["10.0"];
+              $scope.percentiles.v3.value = percentiles["25.0"];
+              $scope.percentiles.v4.value = percentiles["50.0"];
+              $scope.percentiles.v5.value = percentiles["75.0"];
+              $scope.percentiles.v6.value = percentiles["90.0"];
+              $scope.percentiles.v7.value = percentiles["100.0"];
+              $scope.percentiles.v8.value = percentiles["500.0"];
+              $scope.percentiles.v9.value = percentiles["900.0"];
+              $scope.percentiles.v10.value = percentiles["1000.0"];
+              $scope.percentiles.v11.value = percentiles["1500.0"];
+              $scope.percentiles.v12.value = percentiles["2000.0"];
+              $scope.percentiles.v13.value = percentiles["3000.0"];
+              $scope.percentiles.v14.value = percentiles["5000.0"];
+              $scope.percentiles.v15.value = percentiles["10000.0"];
             }
 
 
