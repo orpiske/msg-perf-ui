@@ -120,7 +120,9 @@
 
     $scope.tpInitPercentiles = function(key, test_id, version) {
         console.log("Initializing percentile methods")
-        $scope.$watch('selected.active.test && selected.active.sut', function() {
+        var watchGroup = ['selected.active.test', 'selected.active.sut']
+
+        $scope.$watchGroup(watchGroup,  function() {
 
           console.log("Recalculating percentiles for " + key + " " + test_id)
 
