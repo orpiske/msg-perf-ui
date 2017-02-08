@@ -15,7 +15,6 @@
     "tests"
   ],
   "dependencies": {
-    "Chart.js": "~1.0.2",
     "Ionicons": "ionicons#~2.0.1",
     "amcharts": "~3.15.2",
     "amcharts-stock": "*",
@@ -95,5 +94,8 @@
         "fonts/fontawesome-webfont.woff2"
       ]
     }
+  },
+  "resolutions": {
+    "angular": "^1.0.8"
   }
 }
