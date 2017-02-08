@@ -16,9 +16,9 @@
   ],
   "dependencies": {
     "Ionicons": "ionicons#~2.0.1",
-    "amcharts": "~3.15.2",
-    "amcharts-stock": "*",
-    "ammap": "~3.14.5",
+    "amcharts3": "~3.15.2",
+    "amstock3": "*",
+    "ammap3": "~3.14.5",
     "angular": "~1.4.8",
     "angular-route": "~1.4.6",
     "angular-slimscroll": "~1.1.5",
@@ -40,23 +40,23 @@
     "angular-xeditable": "~0.1.9"
   },
   "overrides": {
-    "amcharts": {
+    "amcharts3": {
       "main": [
-        "./dist/amcharts/amcharts.js",
-        "./dist/amcharts/plugins/responsive/responsive.min.js",
-        "./dist/amcharts/serial.js",
-        "./dist/amcharts/funnel.js",
-        "./dist/amcharts/pie.js",
-        "./dist/amcharts/gantt.js"
+        "./amcharts/amcharts.js",
+        "./amcharts/plugins/responsive/responsive.min.js",
+        "./amcharts/serial.js",
+        "./amcharts/funnel.js",
+        "./amcharts/pie.js",
+        "./amcharts/gantt.js"
       ]
     },
-    "amcharts-stock": {
-      "main": "./dist/amcharts/amstock.js"
+    "amstock3": {
+      "main": "./amcharts/amstock.js"
     },
-    "ammap": {
+    "ammap3": {
       "main": [
-        "./dist/ammap/ammap.js",
-        "./dist/ammap/maps/js/worldLow.js"
+        "./amcharts/ammap.js",
+        "./amcharts/maps/js/worldLow.js"
       ]
     },
     "bootstrap": {
