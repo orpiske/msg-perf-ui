@@ -16,9 +16,9 @@
   ],
   "dependencies": {
     "Ionicons": "ionicons#~2.0.1",
-    "amcharts3": "~3.15.2",
-    "amstock3": "*",
-    "ammap3": "~3.14.5",
+    "amcharts3": "~3.20.20",
+    "amstock3": "~3.20.20",
+    "ammap3": "~3.20.20",
     "angular": "~1.4.8",
     "angular-route": "~1.4.6",
     "angular-slimscroll": "~1.1.5",
