@@ -153,6 +153,27 @@
           </div>
         </div>
 
+				<div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-show="plotted.eden">
+          <div class="row">
+            <div
+              ba-panel
+              ba-panel-title="Broker System Metrics for {{ selected.active.sut.sut }} {{ selected.active.sut.sut_version }}: {{ selected.active.test.test_id }}"
+              ba-panel-class="with-scroll">
+                <div id="edenChart" class="admin-chart"
+                  ng-controller="JavaCtrl"
+                  ng-init="tpInitJava(selected.active.test.test_req_url, selected.active.test.test_id, selected.active.sut.sut_version, selected.active.test.test_start_time, selected.active.start_time.value, selected.active.duration.value)">
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-hide="plotted.eden">
+          <div class="alert bg-danger">
+            There are no broker java performance records for the selected
+            <strong>{{ selected.active.sut.sut_name }} {{ selected.active.sut.sut_version }}</strong>
+            test combination and/or range. Please selected another one.
+          </div>
+        </div>
+
         <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)">
           <div ba-panel ba-panel-title="Test System Information" ba-panel-class="with-scroll table-panel">
             <div include-with-scope="app/pages/performance/widgets/sysinfo.html"></div>
