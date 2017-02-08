@@ -61,6 +61,11 @@
           color: layoutColors.defaultText,
           marginTop: 0,
           marginRight: 15,
+          legend: {
+            useGraphSettings: true,
+            spacing: 30,
+            valueText: "[[description]]"
+          },
           dataProvider: network,
           valueAxes: [
             {
@@ -81,9 +86,10 @@
               lineThickness: 1,
               negativeLineColor: layoutColors.warningLight,
               type: 'smoothedLine',
+              title: "Bytes sent",
               valueField: 'tx'
             },
-						{
+            {
               id: 'g2',
               balloonText: 'received at [[category]]: [[value]] ',
               bullet: 'round',
@@ -92,6 +98,7 @@
               lineThickness: 1,
               negativeLineColor: layoutColors.warning,
               type: 'smoothedLine',
+              title: 'Bytes received',
               valueField: 'rx'
             }
           ],
@@ -122,15 +129,16 @@
           categoryField: 'ts',
           categoryAxis: {
             minPeriod: 'ss',
+            position: 'top',
             parseDates: true,
             minorGridAlpha: 0.1,
             minorGridEnabled: true,
             gridAlpha: 0.5,
-            gridColor: layoutColors.border,
-            title: "Time",
+            gridColor: layoutColors.border
           },
           export: {
-            enabled: true
+            enabled: true,
+            position: 'bottom-right'
           },
           creditsPosition: 'bottom-right',
           pathToImages: layoutPaths.images.amChart
