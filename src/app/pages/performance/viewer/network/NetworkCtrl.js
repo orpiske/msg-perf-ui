@@ -68,46 +68,57 @@
               position: 'left',
               gridAlpha: 0.5,
               gridColor: layoutColors.border,
-              title: "Bytes Sent",
+              title: "Bytes",
             }
           ],
           graphs: [
             {
               id: 'g1',
-              balloonText: '[[value]]',
+              balloonText: 'sent at [[category]]: [[value]]',
               bullet: 'round',
               bulletSize: 8,
-              lineColor: layoutColors.danger,
+              lineColor: layoutColors.dangerLight,
+              lineThickness: 1,
+              negativeLineColor: layoutColors.warningLight,
+              type: 'smoothedLine',
+              valueField: 'tx'
+            },
+						{
+              id: 'g2',
+              balloonText: 'received at [[category]]: [[value]] ',
+              bullet: 'round',
+              bulletSize: 8,
+              lineColor: layoutColors.warning,
               lineThickness: 1,
               negativeLineColor: layoutColors.warning,
               type: 'smoothedLine',
-              valueField: 'tx'
+              valueField: 'rx'
             }
           ],
-          chartScrollbar: {
-            graph: 'g1',
-            gridAlpha: 0,
-            color: layoutColors.defaultText,
-            scrollbarHeight: 55,
-            backgroundAlpha: 0,
-            selectedBackgroundAlpha: 0.05,
-            selectedBackgroundColor: layoutColors.defaultText,
-            graphFillAlpha: 0,
-            autoGridCount: true,
-            selectedGraphFillAlpha: 0,
-            graphLineAlpha: 0.2,
-            selectedGraphLineColor: layoutColors.defaultText,
-            selectedGraphLineAlpha: 1
-          },
+          // chartScrollbar: {
+          //   graph: 'g1',
+          //   gridAlpha: 0,
+          //   color: layoutColors.defaultText,
+          //   scrollbarHeight: 55,
+          //   backgroundAlpha: 0,
+          //   selectedBackgroundAlpha: 0.05,
+          //   selectedBackgroundColor: layoutColors.defaultText,
+          //   graphFillAlpha: 0,
+          //   autoGridCount: true,
+          //   selectedGraphFillAlpha: 0,
+          //   graphLineAlpha: 0.2,
+          //   selectedGraphLineColor: layoutColors.defaultText,
+          //   selectedGraphLineAlpha: 1
+          // },
           chartCursor: {
-            categoryBalloonDateFormat: 'YYYY-MM-DD HH:NN:SS.QQQ',
+            categoryBalloonDateFormat: 'HH:NN:SS',
             cursorAlpha: 0,
             valueLineEnabled: true,
             valueLineBalloonEnabled: true,
             valueLineAlpha: 0.5,
             fullWidth: true
           },
-          dataDateFormat: 'YYYY-MM-DD HH:NN:SS.QQQ',
+          dataDateFormat: 'YYYY-MM-DD HH:NN:SS',
           categoryField: 'ts',
           categoryAxis: {
             minPeriod: 'ss',
