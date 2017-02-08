@@ -79,8 +79,5 @@
         "fonts/fontawesome-webfont.woff2"
       ]
     }
-  },
-  "resolutions": {
-    "angular": "^1.0.8"
   }
 }
