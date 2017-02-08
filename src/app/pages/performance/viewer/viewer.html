@@ -132,13 +132,35 @@
           </div>
         </div>
 
+				<div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-show="plotted.snetwork">
+          <div class="row">
+            <div
+              ba-panel
+              ba-panel-title="Client Sender Network Performance for {{ selected.active.sut.sut }} {{ selected.active.sut.sut_version }}: {{ selected.active.test.test_id }}"
+              ba-panel-class="with-scroll">
+                <div id="networkChart" class="admin-chart"
+                  ng-controller="NetworkCtrl"
+                  ng-init="tpInitNetwork(selected.active.test.test_req_url, selected.active.test.test_id, selected.active.sut.sut_version, selected.active.test.test_start_time, selected.active.start_time.value, selected.active.duration.value)">
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)" ng-hide="plotted.snetwork">
+          <div class="alert bg-danger">
+            There are no receiver network performance records for the selected
+            <strong>{{ selected.active.sut.sut_name }} {{ selected.active.sut.sut_version }}</strong>
+            test combination and/or range. Please selected another one.
+          </div>
+        </div>
+
         <div class="col-md-12" ng-if="loaded.suts && loaded.tests && (selected.active.sut != null)">
           <div ba-panel ba-panel-title="Test System Information" ba-panel-class="with-scroll table-panel">
             <div include-with-scope="app/pages/performance/widgets/sysinfo.html"></div>
           </div>
-
         </div>
       </div>
+
+
 
   </div>
 </div>
