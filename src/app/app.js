@@ -3,7 +3,6 @@
 angular.module('BlurAdmin', [
   'ngAnimate',
   'ui.bootstrap',
-  'ui.sortable',
   'ui.router',
   'toastr',
   "xeditable",
@@ -14,5 +13,6 @@ angular.module('BlurAdmin', [
   'BlurAdmin.pages'
 ])
   .constant("mptUIConfig", {
-        "apiUrl": "http://" + window.location.hostname + ":" + 9200
+         "apiUrl": "http://" + window.location.hostname + ":" + 9200
+
     });
