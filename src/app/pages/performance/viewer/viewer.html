@@ -159,10 +159,14 @@
               ba-panel
               ba-panel-title="Broker System Metrics for {{ selected.active.sut.sut }} {{ selected.active.sut.sut_version }}: {{ selected.active.test.test_id }}"
               ba-panel-class="with-scroll">
-                <div id="edenChart" class="admin-chart"
-                  ng-controller="JavaCtrl"
-                  ng-init="tpInitJava(selected.active.test.test_req_url, selected.active.test.test_id, selected.active.sut.sut_version, selected.active.test.test_start_time, selected.active.start_time.value, selected.active.duration.value)">
-                </div>
+								<div id="brokerSysCharts" ng-controller="JavaCtrl"
+									ng-init="tpInitJava(selected.active.test.test_req_url, selected.active.test.test_id, selected.active.sut.sut_version, selected.active.test.test_start_time, selected.active.start_time.value, selected.active.duration.value)">
+									<div id="edenChart" class="admin-chart">
+	                </div>
+									<div><br></div>
+									<div id="survivorChart" class="admin-chart">
+	                </div>
+								</div>
             </div>
           </div>
         </div>

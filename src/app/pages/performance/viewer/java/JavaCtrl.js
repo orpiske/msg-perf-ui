@@ -42,7 +42,7 @@
     function DoChart(key, test_id, version, date, start_time, duration) {
 
 
-      function DrawChart(jvm) {
+      function DrawEdenChart(jvm) {
         if (jvm.length == 0) {
           $scope.plotted.eden = false;
         }
@@ -51,7 +51,7 @@
         }
 
         var layoutColors = baConfig.colors;
-        var id = $element[0].getAttribute('id');
+        var id = document.getElementById('edenChart');
 
         console.log("Drawing Eden chart");
 
@@ -114,21 +114,6 @@
               valueField: 'eden_max'
             }
           ],
-          // chartScrollbar: {
-          //   graph: 'g1',
-          //   gridAlpha: 0,
-          //   color: layoutColors.defaultText,
-          //   scrollbarHeight: 55,
-          //   backgroundAlpha: 0,
-          //   selectedBackgroundAlpha: 0.05,
-          //   selectedBackgroundColor: layoutColors.defaultText,
-          //   graphFillAlpha: 0,
-          //   autoGridCount: true,
-          //   selectedGraphFillAlpha: 0,
-          //   graphLineAlpha: 0.2,
-          //   selectedGraphLineColor: layoutColors.defaultText,
-          //   selectedGraphLineAlpha: 1
-          // },
           chartCursor: {
             categoryBalloonDateFormat: 'HH:NN:SS',
             cursorAlpha: 0,
@@ -166,6 +151,128 @@
         }
       }
 
+			function DrawSurvivorChart(jvm) {
+				if (jvm.length == 0) {
+					$scope.plotted.survivor = false;
+				}
+				else {
+					$scope.plotted.survivor = true;
+				}
+
+				var layoutColors = baConfig.colors;
+				var id = document.getElementById('survivorChart');
+
+				console.log("Drawing survivor chart for " + id);
+
+				var lineChart = AmCharts.makeChart(id, {
+					type: 'serial',
+					theme: 'blur',
+					color: layoutColors.defaultText,
+					marginTop: 0,
+					marginRight: 15,
+					legend: {
+						useGraphSettings: true,
+						spacing: 30,
+						valueText: "[[description]]"
+					},
+					dataProvider: jvm,
+					valueAxes: [
+						{
+							axisAlpha: 0,
+							position: 'left',
+							gridAlpha: 0.5,
+							gridColor: layoutColors.border,
+							title: "Megabytes",
+						}
+					],
+					graphs: [
+						{
+							id: 'g1',
+							balloonText: '[[value]]',
+							bullet: 'round',
+							bulletSize: 8,
+							lineColor: layoutColors.dangerLight,
+							lineThickness: 1,
+							negativeLineColor: layoutColors.warningLight,
+							type: 'smoothedLine',
+							title: "Survivor Initial",
+							valueField: 'svv_ini'
+						},
+						{
+							id: 'g2',
+							balloonText: '[[value]]',
+							bullet: 'round',
+							bulletSize: 8,
+							lineColor: layoutColors.warning,
+							lineThickness: 1,
+							negativeLineColor: layoutColors.warning,
+							type: 'smoothedLine',
+							title: 'Survivor Committed',
+							valueField: 'svv_cmm'
+						},
+						{
+							id: 'g3',
+							balloonText: '[[value]]',
+							bullet: 'round',
+							bulletSize: 8,
+							lineColor: layoutColors.darkWarning,
+							lineThickness: 1,
+							negativeLineColor: layoutColors.warning,
+							type: 'smoothedLine',
+							title: 'Survivor Max',
+							valueField: 'svv_max'
+						},
+						{
+							id: 'g1',
+							balloonText: '[[value]]',
+							bullet: 'round',
+							bulletSize: 8,
+							lineColor: layoutColors.dangerLight,
+							lineThickness: 1,
+							negativeLineColor: layoutColors.warningLight,
+							type: 'smoothedLine',
+							title: "Survivor used",
+							valueField: 'svv_used'
+						}
+					],
+					chartCursor: {
+						categoryBalloonDateFormat: 'HH:NN:SS',
+						cursorAlpha: 0,
+						valueLineEnabled: true,
+						valueLineBalloonEnabled: true,
+						valueLineAlpha: 0.5,
+						fullWidth: true
+					},
+					dataDateFormat: 'YYYY-MM-DD HH:NN:SS',
+					categoryField: 'ts',
+					categoryAxis: {
+						minPeriod: 'ss',
+						position: 'top',
+						parseDates: true,
+						minorGridAlpha: 0.1,
+						minorGridEnabled: true,
+						gridAlpha: 0.5,
+						gridColor: layoutColors.border
+					},
+					export: {
+						enabled: true,
+						position: 'bottom-right'
+					},
+					creditsPosition: 'bottom-right',
+					pathToImages: layoutPaths.images.amChart
+				});
+
+				lineChart.addListener('rendered', zoomChart);
+				if (lineChart.zoomChart) {
+					lineChart.zoomChart();
+				}
+
+				function zoomChart() {
+					lineChart.zoomToIndexes(Math.round(lineChart.dataProvider.length * 0.4), Math.round(lineChart.dataProvider.length * 0.55));
+				}
+			}
+
+
       var url = mptUIConfig.apiUrl + "/" + key + '/broker-java/_search';
 
       console.log("Sending get request to " + url)
@@ -183,10 +290,15 @@
                 "eden_ini": reply[idx]._source.eden_ini,
                 "eden_max": reply[idx]._source.eden_max,
                 "eden_cmm": reply[idx]._source.eden_cmm,
+								"svv_ini": reply[idx]._source.svv_ini,
+								"svv_max": reply[idx]._source.svv_max,
+								"svv_cmm": reply[idx]._source.svv_cmm,
+								"svv_used": reply[idx]._source.svv_used,
                } ;
             }
 
-            DrawChart(jvmData)
+            DrawEdenChart(jvmData)
+						DrawSurvivorChart(jvmData)
         }, function(response) {
             if (response.status == 404) {
               console.log('Did not find any results for : ' + key)
@@ -213,7 +325,7 @@
               "/" + $scope.selected.active.start_time.value + " - " +
               $scope.selected.active.duration.value)
 
-          $scope.updateEdenChart(
+          $scope.updateJvmChart(
               $scope.selected.active.test.test_req_url,
               $scope.selected.active.test.test_id,
               $scope.selected.active.sut.sut_version,
@@ -221,9 +333,11 @@
               $scope.selected.active.start_time.value,
               $scope.selected.active.duration.value)
         });
+
+
     }
 
-    $scope.updateEdenChart = DoChart;
+    $scope.updateJvmChart = DoChart;
 
   }
 
