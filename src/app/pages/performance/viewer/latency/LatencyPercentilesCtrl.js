@@ -15,7 +15,7 @@
 
     function CalculatePercentiles(key, test_id, version) {
       console.log("Requesting test percentiles from the server")
-      var url = mptUIConfig.apiUrl + "/" + key + '/latency/_search?size=0';
+      var url = mptUIConfig.apiUrl + "/" + key + '/mpt-receiver-latency/_search?size=0';
 
       /*
        * This is ugly. I know and I agree. I will fix this later, after
@@ -23,31 +23,6 @@
        * language
        */
       var requestData = "{\
-          \"query\" : {\
-            \"constant_score\" : { \
-              \"filter\" : {\
-                \"bool\" : {\
-                  \"must\" : [ \
-                    { \
-                      \"term\" : { \
-                        \"test_id\": \"" + test_id + "\" \
-                      } \
-                    },\
-                    { \
-                      \"term\" : { \
-                        \"sut_version\": \"" + version + "\" \
-                      }\
-                    },\
-                    { \
-                      \"term\" : { \
-                        \"test_direction\": \"receiver\" \
-                      }\
-                    }\
-                  ]\
-                }\
-              }\
-            }\
-          },\
           \"aggs\" : { \
                 \"latency_percentiles\" : { \
                     \"percentile_ranks\" : { \
