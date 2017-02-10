@@ -135,7 +135,7 @@
         }
       }
 
-      var url = mptUIConfig.apiUrl + "/" + key + '/latency/_search?size=0&sut_version=' + version;
+      var url = mptUIConfig.apiUrl + "/" + key + '/mpt-receiver-latency/_search?size=0';
 
 
 
@@ -150,21 +150,6 @@
       \"filter\" : {\
         \"bool\" : {\
           \"must\" : [ \
-            { \
-              \"term\" : { \
-                \"test_id\": \"" + test_id + "\" \
-              } \
-            },\
-            { \
-              \"term\" : { \
-                \"sut_version\": \"" + version + "\" \
-              }\
-            },\
-            { \
-              \"term\" : { \
-                \"test_direction\": \"receiver\" \
-              }\
-            },\
             { \"range\" : { \
                 \"creation\" : {\
                   \"gt\" : \"" + date + ".000||+" + start_time + "m\",\
