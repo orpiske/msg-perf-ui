@@ -42,7 +42,7 @@
     function DoChart(key, test_id, version, date, start_time, duration) {
 
 
-			function DrawJVMChart(jvm, name, elemid, field1, field2, field3) {
+			function DrawJVMChart(jvm, name, elemid, field1, field2, max) {
         if (jvm.length == 0) {
           $scope.plotted.eden = false;
         }
@@ -87,7 +87,7 @@
               lineThickness: 1,
               negativeLineColor: layoutColors.warningLight,
               type: 'smoothedLine',
-              title: name + " Used",
+              title: name + ' Used (Max ' + max + ' )',
               valueField: field1
             },
             {
@@ -99,20 +99,8 @@
               lineThickness: 1,
               negativeLineColor: layoutColors.warning,
               type: 'smoothedLine',
-              title: name + ' Committed',
+              title: name + ' Committed (Max ' + max + ' )',
               valueField: field2
-            },
-            {
-              id: 'g3',
-              balloonText: '[[value]]',
-              bullet: 'round',
-              bulletSize: 8,
-              lineColor: layoutColors.darkWarning,
-              lineThickness: 1,
-              negativeLineColor: layoutColors.warning,
-              type: 'smoothedLine',
-              title: name + ' Max',
-              valueField: field3
             }
           ],
           chartCursor: {
@@ -301,23 +289,16 @@
             }
 
 						DrawJVMChart(jvmData, "Eden", "edenChart", "eden_used", "eden_cmm",
-							"eden_max");
+							jvmData[0].eden_max);
 						DrawJVMChart(jvmData, "Survivor", "survivorChart", "svv_used", "svv_cmm",
-								"svv_used");
+								jvmData[0].svv_used);
 						DrawJVMChart(jvmData, "Tenured", "tenuredChart", "tnd_used", "tnd_cmm",
-								"tnd_used");
+								jvmData[0].tnd_used);
 						DrawJVMChart(jvmData, "PermGen/Metaspace", "pmChart", "pm_used", "pm_cmm",
-								"pm_max");
+								jvmData[0].pm_max);
 
 						DrawMemoryChart(osMemData, "OS Memory", "sysMemChart", "free_mem",
 									"swap_free", "swap_cmm");
-
-/*
-						DrawMemoryChart(osMemData, "System Memory", "sysMemChart",
-							"Free Memory", "free_mem",
-							"Swap Free", "swap_free",
-							"Swap Committed", "swap_cmm");
-*/
         }, function(response) {
             if (response.status == 404) {
               console.log('Did not find any results for : ' + key)
