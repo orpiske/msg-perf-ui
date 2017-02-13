@@ -129,6 +129,7 @@
             minPeriod: 'ss',
             position: 'top',
             parseDates: true,
+            equalSpacing: true,
             minorGridAlpha: 0.1,
             minorGridEnabled: true,
             gridAlpha: 0.5,
@@ -152,15 +153,7 @@
         }
       }
 
-			function DrawMemoryChart(jvm, name, elemid, f1Text, field1, f2Text, field2,
-				 	f3Text, field3) {
-        if (jvm.length == 0) {
-          $scope.plotted.sysmem = false;
-        }
-        else {
-          $scope.plotted.sysmem = true;
-        }
-
+			function DrawMemoryChart(jvm, name, elemid, field1, field2, field3) {
         var layoutColors = baConfig.colors;
         var id = document.getElementById(elemid);
 
@@ -198,7 +191,7 @@
               lineThickness: 1,
               negativeLineColor: layoutColors.warningLight,
               type: 'smoothedLine',
-              title: f1Text,
+              title: "Free Physical Memory",
               valueField: field1
             },
             {
@@ -210,7 +203,7 @@
               lineThickness: 1,
               negativeLineColor: layoutColors.warning,
               type: 'smoothedLine',
-              title: f2Text,
+              title: "Free Swap Memory",
               valueField: field2
             },
             {
@@ -222,7 +215,7 @@
               lineThickness: 1,
               negativeLineColor: layoutColors.warning,
               type: 'smoothedLine',
-              title: f3Text,
+              title: "Used Swap Memory",
               valueField: field3
             }
           ],
@@ -240,6 +233,7 @@
             minPeriod: 'ss',
             position: 'top',
             parseDates: true,
+            equalSpacing: true,
             minorGridAlpha: 0.1,
             minorGridEnabled: true,
             gridAlpha: 0.5,
@@ -262,9 +256,6 @@
           lineChart.zoomToIndexes(Math.round(lineChart.dataProvider.length * 0.4), Math.round(lineChart.dataProvider.length * 0.55));
         }
       }
-
-
-
 
       var url = mptUIConfig.apiUrl + "/" + key + '/broker-java/_search';
 
@@ -312,13 +303,18 @@
 								"svv_used");
 						DrawJVMChart(jvmData, "Tenured", "tenuredChart", "tnd_used", "tnd_cmm",
 								"tnd_used");
-						DrawJVMChart(jvmData, "PermGen/Metaspace", "pmChart", "pm_used", "pm_max",
-								"pm_cmm");
+						DrawJVMChart(jvmData, "PermGen/Metaspace", "pmChart", "pm_used", "pm_cmm",
+								"pm_max");
 
+						DrawMemoryChart(osMemData, "OS Memory", "sysMemChart", "free_mem",
+									"swap_free", "swap_cmm");
+
+/*
 						DrawMemoryChart(osMemData, "System Memory", "sysMemChart",
 							"Free Memory", "free_mem",
 							"Swap Free", "swap_free",
 							"Swap Committed", "swap_cmm");
+*/
         }, function(response) {
             if (response.status == 404) {
               console.log('Did not find any results for : ' + key)
