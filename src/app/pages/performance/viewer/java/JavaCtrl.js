@@ -257,7 +257,10 @@
         }
       }
 
-      var url = mptUIConfig.apiUrl + "/" + key + '/broker-java/_search?sort=ts:asc';
+			var maxSize = (duration * 60) / 10
+      var url = mptUIConfig.apiUrl + "/" + key
+				+ '/broker-java/_search?sort=ts:asc&'
+				+ 'size=' + maxSize;
 
       console.log("Sending get request to " + url)
       $http.get(url).then(function(response) {
