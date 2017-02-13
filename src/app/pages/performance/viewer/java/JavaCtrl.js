@@ -257,7 +257,7 @@
         }
       }
 
-      var url = mptUIConfig.apiUrl + "/" + key + '/broker-java/_search';
+      var url = mptUIConfig.apiUrl + "/" + key + '/broker-java/_search?sort=ts:asc';
 
       console.log("Sending get request to " + url)
       $http.get(url).then(function(response) {
