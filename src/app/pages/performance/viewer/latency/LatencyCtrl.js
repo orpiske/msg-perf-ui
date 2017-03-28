@@ -42,8 +42,8 @@
     function DoChart(key, test_id, version, date, start_time, duration) {
 
 
-      function DrawChart(latency) {
-        if (latency.length == 0) {
+      function DrawChart(stats) {
+        if (stats.length == 0) {
           $scope.plotted.rlatency = false;
         }
         else {
@@ -53,7 +53,7 @@
         var layoutColors = baConfig.colors;
         var id = $element[0].getAttribute('id');
 
-        console.log("Drawing latency chart");
+        console.log("Drawing latency chart " + stats);
 
         var lineChart = AmCharts.makeChart(id, {
           type: 'serial',
@@ -61,7 +61,12 @@
           color: layoutColors.defaultText,
           marginTop: 0,
           marginRight: 15,
-          dataProvider: latency,
+          legend: {
+            useGraphSettings: true,
+            spacing: 30,
+            valueText: "[[description]]"
+          },
+          dataProvider: stats,
           valueAxes: [
             {
               axisAlpha: 0,
@@ -81,7 +86,32 @@
               lineThickness: 1,
               negativeLineColor: layoutColors.warning,
               type: 'smoothedLine',
-              valueField: 'avg_latency'
+              valueField: 'average',
+              title: 'Average latency'
+            },
+            {
+              id: 'g2',
+              balloonText: '[[value]]',
+              bullet: 'round',
+              bulletSize: 8,
+              lineColor: layoutColors.successLight,
+              lineThickness: 1,
+              negativeLineColor: layoutColors.warning,
+              type: 'smoothedLine',
+              valueField: 'minimum',
+              title: 'Minimum latency'
+            },
+            {
+              id: 'g3',
+              balloonText: '[[value]]',
+              bullet: 'round',
+              bulletSize: 8,
+              lineColor: layoutColors.warning,
+              lineThickness: 1,
+              negativeLineColor: layoutColors.warning,
+              type: 'smoothedLine',
+              valueField: 'maximum',
+              title: 'Maximum latency'
             }
           ],
           chartScrollbar: {
@@ -169,8 +199,8 @@
                 \"interval\" : \"1s\" \
             },\
             \"aggs\" : {\
-                \"avg_latency\" : { \
-                    \"avg\" : { \
+                \"stats_latency\" : { \
+                    \"stats\" : { \
                         \"field\" : \"latency\" \
                       } \
                     }\
@@ -191,8 +221,10 @@
             for (var idx in reply) {
               latencyData[idx] = {
                 "key_as_string": reply[idx].key_as_string,
-                "doc_count": reply[idx].doc_count,
-                "avg_latency": reply[idx].avg_latency.value,
+								"minimum": reply[idx].stats_latency.min,
+								"maximum": reply[idx].stats_latency.max,
+                "average": reply[idx].stats_latency.avg,
+								"count": reply[idx].stats_latency.sum,
                } ;
             }
 
