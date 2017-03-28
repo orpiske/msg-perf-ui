@@ -168,9 +168,8 @@
 						}\
 					}\
 				}\
-			}\
-		}\
-	}, \"sort\" : [ {\"ts\" : {\"order\" : \"asc\"}} ]\
+			},\
+	\"sort\" : [ {\"ts\" : {\"order\" : \"asc\"}} ]\
 }"
 
 			$http.post(url,requestData).then(function(response) {
