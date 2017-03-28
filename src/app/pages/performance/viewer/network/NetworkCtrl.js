@@ -70,6 +70,7 @@
           valueAxes: [
             {
               axisAlpha: 0,
+							stackType: "regular",
               position: 'left',
               gridAlpha: 0.5,
               gridColor: layoutColors.border,
@@ -102,21 +103,6 @@
               valueField: 'rx'
             }
           ],
-          // chartScrollbar: {
-          //   graph: 'g1',
-          //   gridAlpha: 0,
-          //   color: layoutColors.defaultText,
-          //   scrollbarHeight: 55,
-          //   backgroundAlpha: 0,
-          //   selectedBackgroundAlpha: 0.05,
-          //   selectedBackgroundColor: layoutColors.defaultText,
-          //   graphFillAlpha: 0,
-          //   autoGridCount: true,
-          //   selectedGraphFillAlpha: 0,
-          //   graphLineAlpha: 0.2,
-          //   selectedGraphLineColor: layoutColors.defaultText,
-          //   selectedGraphLineAlpha: 1
-          // },
           chartCursor: {
             categoryBalloonDateFormat: 'HH:NN:SS',
             cursorAlpha: 0,
@@ -131,6 +117,7 @@
             minPeriod: 'ss',
             position: 'top',
             parseDates: true,
+            equalSpacing: true,
             minorGridAlpha: 0.1,
             minorGridEnabled: true,
             gridAlpha: 0.5,
@@ -154,7 +141,10 @@
         }
       }
 
-      var url = mptUIConfig.apiUrl + "/" + key + '/sender-network/_search';
+			var maxSize = (duration * 60) / 10
+			var url = mptUIConfig.apiUrl + "/" + key
+				+ '/sender-network/_search?sort=ts:asc&'
+				+ 'size=' + maxSize;
 
       console.log("Sending get request to " + url)
       $http.get(url).then(function(response) {
