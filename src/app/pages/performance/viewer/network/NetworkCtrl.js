@@ -125,7 +125,7 @@
             valueLineAlpha: 0.5,
             fullWidth: true
           },
-          dataDateFormat: 'YYYY-MM-DD HH:NN:SS',
+          dataDateFormat: 'YYYY-MM-DD JJ:NN:SS',
           categoryField: 'ts',
           categoryAxis: {
             minPeriod: 'ss',
