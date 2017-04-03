@@ -143,11 +143,26 @@
 
 			var maxSize = (duration * 60) / 10
 			var url = mptUIConfig.apiUrl + "/" + key
-				+ '/sender-network/_search?sort=ts:asc&'
-				+ 'size=' + maxSize;
+				+ '/sender-network/_search?size=' + maxSize;
+
+			var requestData = "{\
+		\"query\" : {\
+			\"constant_score\" : { \
+				\"filter\" : {\
+						\"range\" : { \
+								\"ts\" : {\
+									\"gt\" : \"" + date + "||+" + start_time + "m-1s\",\
+									\"lt\" : \"" + date + "||+" + start_time + "m+" + duration + "m\" \
+								} \
+							}\
+						}\
+					}\
+				},\
+		\"sort\" : [ {\"ts\" : {\"order\" : \"asc\"}} ]\
+	}"
 
       console.log("Sending get request to " + url)
-      $http.get(url).then(function(response) {
+      $http.post(url, requestData).then(function(response) {
             var reply = response.data.hits.hits;
             var networkData = new Array();
 
