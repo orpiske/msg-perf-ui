@@ -70,26 +70,6 @@
           label: "1000ms",
           value: null,
         },
-        v11 : {
-          label: "1500ms",
-          value: null,
-        },
-        v12 : {
-          label: "2000ms",
-          value: null,
-        },
-        v13 : {
-          label: "3000ms",
-          value: null,
-        },
-        v14 : {
-          label: "5000ms",
-          value: null,
-        },
-        v15 : {
-          label: "10000ms",
-          value: null,
-        },
     }
 
     var suts;

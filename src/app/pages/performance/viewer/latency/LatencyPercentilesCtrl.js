@@ -27,7 +27,7 @@
                 \"latency_percentiles\" : { \
                     \"percentile_ranks\" : { \
                         \"field\" : \"latency\", \
-                        \"values\" : [5, 10, 25, 50, 75, 90, 100, 500, 900, 1000, 1500, 2000, 3000, 5000, 10000] \
+                        \"values\" : [5, 10, 25, 50, 75, 90, 100, 500, 900, 1000] \
                     } \
                 } \
             } \
@@ -51,11 +51,6 @@
               $scope.percentiles.v8.value = "";
               $scope.percentiles.v9.value = "";
               $scope.percentiles.v10.value = "";
-              $scope.percentiles.v11.value = "";
-              $scope.percentiles.v12.value = "";
-              $scope.percentiles.v13.value = "";
-              $scope.percentiles.v14.value = "";
-              $scope.percentiles.v15.value = "";
             }
             else {
               $scope.loaded.percentiles = true;
@@ -70,11 +65,6 @@
               $scope.percentiles.v8.value = percentiles["500.0"];
               $scope.percentiles.v9.value = percentiles["900.0"];
               $scope.percentiles.v10.value = percentiles["1000.0"];
-              $scope.percentiles.v11.value = percentiles["1500.0"];
-              $scope.percentiles.v12.value = percentiles["2000.0"];
-              $scope.percentiles.v13.value = percentiles["3000.0"];
-              $scope.percentiles.v14.value = percentiles["5000.0"];
-              $scope.percentiles.v15.value = percentiles["10000.0"];
             }
 
 
