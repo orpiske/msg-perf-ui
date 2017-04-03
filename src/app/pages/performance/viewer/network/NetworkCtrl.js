@@ -141,7 +141,7 @@
         }
       }
 
-			var maxSize = (duration * 60) / 10
+			var maxSize = duration * 60
 			var url = mptUIConfig.apiUrl + "/" + key
 				+ '/sender-network/_search?size=' + maxSize;
 
